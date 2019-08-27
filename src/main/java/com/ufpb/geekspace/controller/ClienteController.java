@@ -28,8 +28,8 @@ public class ClienteController {
 	}
 	
 	@GetMapping(value = "/{clientId}")
-	public Cliente retrieveOneClient(@PathVariable long clienteId) {
-		return clienteService.retrieveOneClient(clienteId);
+	public Cliente retrieveOneClient(@PathVariable long clientId) {
+		return clienteService.retrieveOneClient(clientId);
 	}
 	
 	@PostMapping(value = "/new")
