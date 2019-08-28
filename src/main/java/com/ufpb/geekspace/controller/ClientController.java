@@ -13,37 +13,37 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ufpb.geekspace.model.Cliente;
-import com.ufpb.geekspace.service.ClienteService;
+import com.ufpb.geekspace.model.Client;
+import com.ufpb.geekspace.service.ClientService;
 
 @RestController
 @RequestMapping(value = "clients")
-public class ClienteController {
+public class ClientController {
 	@Autowired
-	private ClienteService clienteService;
+	private ClientService clientService;
 	
 	@GetMapping
-	public List<Cliente> retrievAllClientes(){
-		return clienteService.retrievAllClientes();
+	public List<Client> retrievAllClients(){
+		return clientService.retrievAllClients();
 	}
 	
 	@GetMapping(value = "/{clientId}")
-	public Cliente retrieveOneClient(@PathVariable long clientId) {
-		return clienteService.retrieveOneClient(clientId);
+	public Client retrieveOneClient(@PathVariable long clientId) {
+		return clientService.retrieveOneClient(clientId);
 	}
 	
 	@PostMapping(value = "/new")
-	public ResponseEntity<?> createClient(@RequestBody Cliente cliente) {
-		return clienteService.createCliente(cliente);
+	public ResponseEntity<?> createClient(@RequestBody Client cliente) {
+		return clientService.createClient(cliente);
 	}
 	
 	@PutMapping
-	public void editClient(@RequestBody Cliente client) {
-		clienteService.editMember(client);
+	public void editClient(@RequestBody Client client) {
+		clientService.editClient(client);
 	}
 	
 	@DeleteMapping(value = "/{clientId}")
 	public void deleteClient(@PathVariable long clientId) {
-		clienteService.deleteClient(clientId);
+		clientService.deleteClient(clientId);
 	}
 }

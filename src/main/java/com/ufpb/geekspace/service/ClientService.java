@@ -6,31 +6,31 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import com.ufpb.geekspace.model.Cliente;
+import com.ufpb.geekspace.model.Client;
 import com.ufpb.geekspace.repository.ClientRepository;
 
 @Service
-public class ClienteService {
+public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
 
-	public List<Cliente> retrievAllClientes() {
+	public List<Client> retrievAllClients() {
 		return clientRepository.findAll();
 	}
 
-	public Cliente retrieveOneClient(long clienteId) {
+	public Client retrieveOneClient(long clienteId) {
 		return clientRepository.getOne(clienteId);
 	}
 
-	public ResponseEntity<?> createCliente(Cliente cliente) {
-		Cliente createdClient = clientRepository.save(cliente);
-		return new ResponseEntity<Cliente>(createdClient, HttpStatus.OK);
+	public ResponseEntity<?> createClient(Client cliente) {
+		Client createdClient = clientRepository.save(cliente);
+		return new ResponseEntity<Client>(createdClient, HttpStatus.OK);
 		
 	}
 
-	public ResponseEntity<?> editMember(Cliente client) {
-		Cliente createdClient = clientRepository.save(client);
-		return new ResponseEntity<Cliente>(createdClient, HttpStatus.OK);
+	public ResponseEntity<?> editClient(Client client) {
+		Client createdClient = clientRepository.save(client);
+		return new ResponseEntity<Client>(createdClient, HttpStatus.OK);
 		
 	}
 
