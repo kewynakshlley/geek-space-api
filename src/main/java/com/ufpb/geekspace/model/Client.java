@@ -9,7 +9,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
 @JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
-public class Cliente {
+public class Client {
 	@Id
 	@GeneratedValue
 	private long id;
@@ -22,9 +22,9 @@ public class Cliente {
 	@Column (name = "EMAIL")
 	private String email;
 	
-	public Cliente() {}
+	public Client() {}
 	
-	public Cliente(long id, String firstName, String lastName, String password, String email) {
+	public Client(long id, String firstName, String lastName, String password, String email) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
