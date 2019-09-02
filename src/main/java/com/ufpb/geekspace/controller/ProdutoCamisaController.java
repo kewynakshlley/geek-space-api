@@ -18,7 +18,7 @@ import com.ufpb.geekspace.service.ProductCamisaService;
 
 @RestController
 @RequestMapping(value = "ProdutoCamisa")
-public class CamisaProductController {
+public class ProdutoCamisaController {
 
 	@Autowired
 	ProductCamisaService camisaService;

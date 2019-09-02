@@ -7,35 +7,35 @@ import javax.persistence.Entity;
 public class ProdutoCamisa extends ProdutoGenerico {
 	
 	@Column(name = "COR_CAMISA")
-	private String cor;
+	private String color;
 	
 	@Column(name =" GENERO_CAMISA")
-	private String genero;
+	private String genre;
 	
 	public ProdutoCamisa () {
 		
 	}
 
-	public ProdutoCamisa(String cor, String genero) {
+	public ProdutoCamisa(String color, String genre) {
 		super();
-		this.cor = cor;
-		this.genero = genero;
+		this.color = color;
+		this.genre = genre;
 	}
 
-	public String getCor() {
-		return cor;
+	public String getColor() {
+		return color;
 	}
 
-	public void setCor(String cor) {
-		this.cor = cor;
+	public void setColor(String color) {
+		this.color = color;
 	}
 
-	public String getGenero() {
-		return genero;
+	public String getGenre() {
+		return genre;
 	}
 
-	public void setGenero(String genero) {
-		this.genero = genero;
+	public void setGenre(String genre) {
+		this.genre = genre;
 	}
 	
 	
