@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufpb.geekspace.model.Client;
+import com.ufpb.geekspace.model.ProdutoGenerico;
 import com.ufpb.geekspace.service.ClientService;
 
 @RestController
@@ -45,5 +46,10 @@ public class ClientController {
 	@DeleteMapping(value = "/{clientId}")
 	public void deleteClient(@PathVariable long clientId) {
 		clientService.deleteClient(clientId);
+	}
+	
+	@GetMapping(value = "/{clientId}/shopping-cart")
+	public List<ProdutoGenerico> getShoppingCart(@PathVariable long clientId){
+		return clientService.retrieveShoppingCart(clientId);
 	}
 }
