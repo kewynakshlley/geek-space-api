@@ -4,37 +4,44 @@ import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
-@JsonIgnoreProperties({"hibernateLazyInitializer","handler"})
+@JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class ProdutoGenerico {
-	
+
 	@Id
 	@GeneratedValue
 	private long id;
-	
+
 	@Column(name = "NAME_PRODUCT")
 	private String name;
-	
+
 	@Column(name = "QUANTITY")
 	private int quantity;
-	
+
 	@Column(name = "PRICE")
 	private double price;
-	
+
 	@Column(name = "ESPECIFICATION")
 	private String specification;
-	
+
 	@Column(name = "DESCRIPTION")
 	private String description;
-	
+
+	@ManyToOne
+	@JoinColumn(name = "client_id", nullable = false)
+	private Client client;
+
 	public ProdutoGenerico() {
-		
+
 	}
 
-	public ProdutoGenerico(long id, String name, int quantity, double price, String specification, String description) {
+	public ProdutoGenerico(long id, String name, int quantity, double price, String specification, String description,
+			Client client) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -42,6 +49,8 @@ public class ProdutoGenerico {
 		this.price = price;
 		this.specification = specification;
 		this.description = description;
+		this.client = client;
+
 	}
 
 	public long getId() {
@@ -92,32 +101,12 @@ public class ProdutoGenerico {
 		this.description = description;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (int) (id ^ (id >>> 32));
-		return result;
+	public Client getClient() {
+		return client;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ProdutoGenerico other = (ProdutoGenerico) obj;
-		if (id != other.id)
-			return false;
-		return true;
+	public void setClient(Client client) {
+		this.client = client;
 	}
-	
-	
-	
-	
-	
-	
 
 }
