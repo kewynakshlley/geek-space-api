@@ -7,12 +7,21 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import com.ufpb.geekspace.model.Client;
+import com.ufpb.geekspace.model.ProdutoGenerico;
+import com.ufpb.geekspace.repository.CamisaRepository;
 import com.ufpb.geekspace.repository.ClientRepository;
+import com.ufpb.geekspace.repository.ProductRepository;
 
 @Service
 public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
+	
+	@Autowired
+	private ProductRepository productRepository;
+	
+	@Autowired
+	private CamisaRepository camisaRepository;
 
 	public List<Client> retrievAllClients() {
 		return clientRepository.findAll();
@@ -37,6 +46,11 @@ public class ClientService {
 	public void deleteClient(long clientId) {
 		clientRepository.deleteById(clientId);
 		
+	}
+
+	public List<ProdutoGenerico> retrieveShoppingCart(long clientId) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
