@@ -9,10 +9,10 @@ import javax.persistence.Entity;
 @Entity
 public class ShirtProduct extends Product {
 
-	@Column(name = "COR_CAMISA")
+	@Column(name = "COLOR")
 	private String color;
 
-	@Column(name = " GENERO_CAMISA")
+	@Column(name = " GENRE")
 	private String genre;
 
 	public ShirtProduct() {

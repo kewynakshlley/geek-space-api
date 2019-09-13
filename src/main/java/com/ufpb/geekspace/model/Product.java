@@ -23,7 +23,7 @@ public class Product {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
-	@Column(name = "NAME_PRODUCT")
+	@Column(name = "NAME")
 	private String name;
 
 	@Column(name = "QUANTITY")

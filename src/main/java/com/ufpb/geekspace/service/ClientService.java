@@ -12,7 +12,6 @@ import com.ufpb.geekspace.dto.ProductDTO;
 import com.ufpb.geekspace.model.Client;
 import com.ufpb.geekspace.model.GenericProduct;
 import com.ufpb.geekspace.model.ShirtProduct;
-import com.ufpb.geekspace.model.ShoppingCart;
 import com.ufpb.geekspace.model.Product;
 import com.ufpb.geekspace.repository.ShirtProductRepository;
 import com.ufpb.geekspace.repository.ClientRepository;
@@ -27,7 +26,7 @@ public class ClientService {
 	private GenericProductRepository productRepository;
 
 	@Autowired
-	private ShirtProductRepository camisaRepository;
+	private ShirtProductRepository shirtRepository;
 
 	public List<Client> retrievAllClients() {
 		return clientRepository.findAll();
@@ -56,17 +55,10 @@ public class ClientService {
 
 	public List<Product> retrieveShoppingCart(long clientId) {
 		List<Product> aux = new ArrayList<>();
-		List<ShoppingCart> sc =  productRepository.findShoppingCart(clientId);
-		for(ShoppingCart x: sc) {
-			GenericProduct gp = productRepository.getOne(x.getProductId());
-			ShirtProduct sp = camisaRepository.getOne(x.getProductId());
-			if(gp != null) {
-				aux.add(gp);
-				continue;
-			}
-			if(sp != null)
-				aux.add(sp);
-		}
+		List<GenericProduct> sc =  productRepository.findShoppingCart(clientId);
+		List<ShirtProduct> sp =  shirtRepository.findShoppingCart(clientId);
+		aux.addAll(sc);
+		aux.addAll(sp);
 		return aux;
 	}
 
@@ -74,7 +66,7 @@ public class ClientService {
 		Client caux = clientRepository.getOne(clientId);
 		for (ProductDTO pdto : items) {
 			Product pg = productRepository.getOne(pdto.getProductId());
-			ShirtProduct pc = camisaRepository.getOne(pdto.getProductId());
+			ShirtProduct pc = shirtRepository.getOne(pdto.getProductId());
 			if (pg != null) {
 				caux.getCart().add(pg);
 				continue;
@@ -93,7 +85,7 @@ public class ClientService {
 		if (pg != null)
 			caux.getCart().remove(pg);
 
-		ShirtProduct pc = camisaRepository.getOne(product.getProductId());
+		ShirtProduct pc = shirtRepository.getOne(product.getProductId());
 		if (pc != null)
 			caux.getCart().remove(pc);
 		clientRepository.save(caux);
