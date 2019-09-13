@@ -1,20 +1,26 @@
 package com.ufpb.geekspace.model;
 
+
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-
+import javax.persistence.Inheritance;
+import javax.persistence.ManyToMany;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import javax.persistence.InheritanceType;
 
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
-public class ProdutoGenerico {
+public class Product {
 
 	@Id
-	@GeneratedValue
+	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
 
 	@Column(name = "NAME_PRODUCT")
@@ -31,17 +37,17 @@ public class ProdutoGenerico {
 
 	@Column(name = "DESCRIPTION")
 	private String description;
+	
+	@ManyToMany(mappedBy = "shoppingCart")
+	@JsonIgnore
+	private Set<Client> client;
 
-	@ManyToOne
-	@JoinColumn(name = "client_id", nullable = false)
-	private Client client;
-
-	public ProdutoGenerico() {
+	public Product() {
 
 	}
 
-	public ProdutoGenerico(long id, String name, int quantity, double price, String specification, String description,
-			Client client) {
+	public Product(long id, String name, int quantity, double price, String specification, String description,
+			Set<Client> client) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -101,12 +107,14 @@ public class ProdutoGenerico {
 		this.description = description;
 	}
 
-	public Client getClient() {
+	public Set<Client> getClient() {
 		return client;
 	}
 
-	public void setClient(Client client) {
+	public void setClient(Set<Client> client) {
 		this.client = client;
 	}
+
+	
 
 }

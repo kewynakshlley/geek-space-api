@@ -13,33 +13,33 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ufpb.geekspace.model.Admin;
-import com.ufpb.geekspace.service.AdminService;
+import com.ufpb.geekspace.model.Administrator;
+import com.ufpb.geekspace.service.AdministratorService;
 
 @RestController
 @RequestMapping(value = "admins")
-public class AdminController {
+public class AdministratorController {
 	
 	@Autowired
-	private AdminService adminService;
+	private AdministratorService adminService;
 	
 	@PostMapping(value = "/new")
-	public ResponseEntity<?> createAdmin(@RequestBody Admin admin){
+	public ResponseEntity<?> createAdmin(@RequestBody Administrator admin){
 		return adminService.createAdmin(admin);
 	}
 	
 	@GetMapping
-	public List<Admin> getAllAdmins(){
+	public List<Administrator> getAllAdmins(){
 		return adminService.retrievAllAdmins();
 	}
 	
 	@GetMapping(value = "/{adminId}")
-	public Admin getOneAdmin(@PathVariable long adminId) {
+	public Administrator getOneAdmin(@PathVariable long adminId) {
 		return adminService.retrieveOneAdmin(adminId);
 	}
 	
 	@PutMapping
-	public void editAdmin(@RequestBody Admin admin) {
+	public void editAdmin(@RequestBody Administrator admin) {
 		adminService.editAdmin(admin);
 	}
 	

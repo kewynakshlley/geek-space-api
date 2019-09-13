@@ -13,8 +13,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufpb.geekspace.dto.ProductDTO;
 import com.ufpb.geekspace.model.Client;
-import com.ufpb.geekspace.model.ProdutoGenerico;
+import com.ufpb.geekspace.model.Product;
 import com.ufpb.geekspace.service.ClientService;
 
 @RestController
@@ -49,7 +50,18 @@ public class ClientController {
 	}
 	
 	@GetMapping(value = "/{clientId}/shopping-cart")
-	public List<ProdutoGenerico> getShoppingCart(@PathVariable long clientId){
+	public List<Product> getShoppingCart(@PathVariable long clientId){
 		return clientService.retrieveShoppingCart(clientId);
+	}
+	
+	@PostMapping(value = "/{clientId}/add-to-cart")
+	public void addToCart(@RequestBody List<ProductDTO> items, @PathVariable long clientId) {
+		clientService.addToCart(items, clientId);
+		
+	}
+	
+	@DeleteMapping(value = "/{clientId}/remove-from-cart")
+	public void removeFromCart(@RequestBody ProductDTO item, @PathVariable long clientId) {
+		clientService.removeFromCart(clientId, item);
 	}
 }

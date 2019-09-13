@@ -1,27 +1,33 @@
 package com.ufpb.geekspace.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+
+import com.ufpb.geekspace.dto.ProductDTO;
 import com.ufpb.geekspace.model.Client;
-import com.ufpb.geekspace.model.ProdutoGenerico;
-import com.ufpb.geekspace.repository.CamisaRepository;
+import com.ufpb.geekspace.model.GenericProduct;
+import com.ufpb.geekspace.model.ShirtProduct;
+import com.ufpb.geekspace.model.ShoppingCart;
+import com.ufpb.geekspace.model.Product;
+import com.ufpb.geekspace.repository.ShirtProductRepository;
 import com.ufpb.geekspace.repository.ClientRepository;
-import com.ufpb.geekspace.repository.ProductRepository;
+import com.ufpb.geekspace.repository.GenericProductRepository;
 
 @Service
 public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
-	
+
 	@Autowired
-	private ProductRepository productRepository;
-	
+	private GenericProductRepository productRepository;
+
 	@Autowired
-	private CamisaRepository camisaRepository;
+	private ShirtProductRepository camisaRepository;
 
 	public List<Client> retrievAllClients() {
 		return clientRepository.findAll();
@@ -34,23 +40,64 @@ public class ClientService {
 	public ResponseEntity<?> createClient(Client cliente) {
 		Client createdClient = clientRepository.save(cliente);
 		return new ResponseEntity<Client>(createdClient, HttpStatus.OK);
-		
+
 	}
 
 	public ResponseEntity<?> editClient(Client client) {
 		Client createdClient = clientRepository.save(client);
 		return new ResponseEntity<Client>(createdClient, HttpStatus.OK);
-		
+
 	}
 
 	public void deleteClient(long clientId) {
 		clientRepository.deleteById(clientId);
-		
+
 	}
 
-	public List<ProdutoGenerico> retrieveShoppingCart(long clientId) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Product> retrieveShoppingCart(long clientId) {
+		List<Product> aux = new ArrayList<>();
+		List<ShoppingCart> sc =  productRepository.findShoppingCart(clientId);
+		for(ShoppingCart x: sc) {
+			GenericProduct gp = productRepository.getOne(x.getProductId());
+			ShirtProduct sp = camisaRepository.getOne(x.getProductId());
+			if(gp != null) {
+				aux.add(gp);
+				continue;
+			}
+			if(sp != null)
+				aux.add(sp);
+		}
+		return aux;
+	}
+
+	public void addToCart(List<ProductDTO> items, long clientId) {
+		Client caux = clientRepository.getOne(clientId);
+		for (ProductDTO pdto : items) {
+			Product pg = productRepository.getOne(pdto.getProductId());
+			ShirtProduct pc = camisaRepository.getOne(pdto.getProductId());
+			if (pg != null) {
+				caux.getCart().add(pg);
+				continue;
+			}
+			if (pc != null)
+				caux.getCart().add(pc);
+		}
+		clientRepository.save(caux);
+
+	}
+
+	public void removeFromCart(long clientId, ProductDTO product) {
+		Client caux = clientRepository.getOne(clientId);
+
+		Product pg = productRepository.getOne(product.getProductId());
+		if (pg != null)
+			caux.getCart().remove(pg);
+
+		ShirtProduct pc = camisaRepository.getOne(product.getProductId());
+		if (pc != null)
+			caux.getCart().remove(pc);
+		clientRepository.save(caux);
+
 	}
 
 }

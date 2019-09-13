@@ -6,7 +6,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Admin {
+public class Administrator {
 	
 	@Id
 	@GeneratedValue
@@ -16,9 +16,9 @@ public class Admin {
 	@Column(name = "PASSWORD")
 	private String password;
 	
-	public Admin() {}
+	public Administrator() {}
 	
-	public Admin(long id, String email, String password) {
+	public Administrator(long id, String email, String password) {
 		super();
 		this.id = id;
 		this.email = email;

@@ -1,23 +1,27 @@
 package com.ufpb.geekspace.model;
 
+
+import java.util.Set;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 
 @Entity
-public class ProdutoCamisa extends ProdutoGenerico {
-	
+public class ShirtProduct extends Product {
+
 	@Column(name = "COR_CAMISA")
 	private String color;
-	
-	@Column(name =" GENERO_CAMISA")
+
+	@Column(name = " GENERO_CAMISA")
 	private String genre;
-	
-	public ProdutoCamisa () {
-		
+
+	public ShirtProduct() {
+
 	}
 
-	public ProdutoCamisa(String color, String genre) {
-		super();
+	public ShirtProduct(long id, String name, int quantity, double price, String specification, String description,
+			Set<Client> client, String color, String genre) {
+		super(id, name, quantity, price, specification, description, client);
 		this.color = color;
 		this.genre = genre;
 	}
@@ -37,8 +41,5 @@ public class ProdutoCamisa extends ProdutoGenerico {
 	public void setGenre(String genre) {
 		this.genre = genre;
 	}
-	
-	
-	
-	
+
 }

@@ -1,14 +1,18 @@
 package com.ufpb.geekspace.model;
 
-import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
@@ -24,21 +28,25 @@ public class Client {
 	private String password;
 	@Column(name = "EMAIL")
 	private String email;
-	@OneToMany(mappedBy = "client")
-	private List<ProdutoGenerico> cart;
+	@ManyToMany
+	@JoinTable(
+	  name = "shopping_cart", 
+	  joinColumns = @JoinColumn(name = "client_id"), 
+	  inverseJoinColumns = @JoinColumn(name = "product_id"))
+	private Set<Product> shoppingCart;
 
 	public Client() {
 	}
 
 	public Client(long id, String firstName, String lastName, String password, String email,
-			List<ProdutoGenerico> cart) {
+			Set<Product> shoppingCart) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.password = password;
 		this.email = email;
-		this.cart = cart;
+		this.shoppingCart = shoppingCart;
 	}
 
 	public long getId() {
@@ -81,12 +89,12 @@ public class Client {
 		this.email = email;
 	}
 
-	public List<ProdutoGenerico> getCart() {
-		return cart;
+	public Set<Product> getCart() {
+		return shoppingCart;
 	}
 
-	public void setCart(List<ProdutoGenerico> cart) {
-		this.cart = cart;
+	public void setCart(Set<Product> shoppingCart) {
+		this.shoppingCart = shoppingCart;
 	}
 
 }
