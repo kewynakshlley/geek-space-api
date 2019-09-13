@@ -1,5 +1,6 @@
 package com.ufpb.geekspace.model;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -9,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
-
+import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -34,6 +35,9 @@ public class Client {
 	  joinColumns = @JoinColumn(name = "client_id"), 
 	  inverseJoinColumns = @JoinColumn(name = "product_id"))
 	private Set<Product> shoppingCart;
+	
+	@OneToMany(mappedBy = "client")
+	private List<Sale> sales;
 
 	public Client() {
 	}
