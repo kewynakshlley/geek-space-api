@@ -17,7 +17,7 @@ import com.ufpb.geekspace.model.Administrator;
 import com.ufpb.geekspace.service.AdministratorService;
 
 @RestController
-@RequestMapping(value = "admins")
+@RequestMapping(value = "administrators")
 public class AdministratorController {
 	
 	@Autowired

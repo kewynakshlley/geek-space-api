@@ -7,5 +7,6 @@ import com.ufpb.geekspace.model.Administrator;
 
 @Repository
 public interface AdministratorRepository extends JpaRepository<Administrator, Long> {
+	Administrator findByEmailAndPassword(String email, String password);
 
 }
