@@ -13,16 +13,20 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ufpb.geekspace.dto.ProductDTO;
+import com.ufpb.geekspace.dto.ItemDTO;
 import com.ufpb.geekspace.model.Client;
-import com.ufpb.geekspace.model.Product;
+import com.ufpb.geekspace.model.ShoppingCart;
 import com.ufpb.geekspace.service.ClientService;
+import com.ufpb.geekspace.service.ShoppingCartService;
 
 @RestController
 @RequestMapping(value = "clients")
 public class ClientController {
 	@Autowired
 	private ClientService clientService;
+	
+	@Autowired
+	private ShoppingCartService shoppingCartService;
 	
 	@GetMapping
 	public List<Client> retrievAllClients(){
@@ -50,18 +54,23 @@ public class ClientController {
 	}
 	
 	@GetMapping(value = "/{clientId}/shopping-cart")
-	public List<Product> getShoppingCart(@PathVariable long clientId){
-		return clientService.retrieveShoppingCart(clientId);
+	public ShoppingCart getShoppingCart(@PathVariable long clientId){
+		return shoppingCartService.retrieveShoppingCart(clientId);
 	}
 	
-	@PostMapping(value = "/{clientId}/add-to-cart")
-	public void addToCart(@RequestBody List<ProductDTO> items, @PathVariable long clientId) {
-		clientService.addToCart(items, clientId);
+	@PutMapping(value = "{clientId}/shopping-cart/edit")
+	public void editShoppingCart(@RequestBody ShoppingCart shoppingCart) {
+		shoppingCartService.editShoppingCart(shoppingCart);
+	}
+	
+	@PostMapping(value = "/{clientId}/create-cart")
+	public void createShoppingCart(@RequestBody ShoppingCart shoppingCart, @PathVariable long clientId) {
+		shoppingCartService.createShoppingCart(shoppingCart, clientId);
 		
 	}
 	
-	@DeleteMapping(value = "/{clientId}/remove-from-cart")
-	public void removeFromCart(@RequestBody ProductDTO item, @PathVariable long clientId) {
-		clientService.removeFromCart(clientId, item);
+	@DeleteMapping(value = "/{clientId}/remove-item-from-cart/{itemId}")
+	public void removeFromCart(@RequestBody ItemDTO item, @PathVariable long clientId, @PathVariable long itemId) {
+		shoppingCartService.removeFromCart(clientId, itemId);
 	}
 }

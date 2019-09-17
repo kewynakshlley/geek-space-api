@@ -1,7 +1,8 @@
 package com.ufpb.geekspace.model;
 
 
-import java.util.Set;
+import java.util.List;
+
 
 import javax.persistence.Entity;
 
@@ -10,10 +11,13 @@ public class GenericProduct extends Product{
 	
 	public GenericProduct() {}
 
-	public GenericProduct(long id, String name, int quantity, double price, String specification, String description,
-			Set<Client> client) {
-		super(id, name, quantity, price, specification, description, client);
+	public GenericProduct(long id, String name, String category, int quantity, double price, String specification,
+			String description, List<Item> items) {
+		super(id, name, category, quantity, price, specification, description, items);
+
 	}
+
+	
 	
 	
 

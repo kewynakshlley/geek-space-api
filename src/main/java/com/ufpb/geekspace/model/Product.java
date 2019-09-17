@@ -1,7 +1,6 @@
 package com.ufpb.geekspace.model;
 
-
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -9,7 +8,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
-import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.InheritanceType;
@@ -25,6 +25,9 @@ public class Product {
 
 	@Column(name = "NAME")
 	private String name;
+	
+	@Column(name = "CATEGORY")
+	private String category;
 
 	@Column(name = "QUANTITY")
 	private int quantity;
@@ -37,25 +40,25 @@ public class Product {
 
 	@Column(name = "DESCRIPTION")
 	private String description;
-	
-	@ManyToMany(mappedBy = "shoppingCart")
 	@JsonIgnore
-	private Set<Client> client;
+	@OneToMany(mappedBy = "product")
+	private List<Item> items;
 
 	public Product() {
 
 	}
 
-	public Product(long id, String name, int quantity, double price, String specification, String description,
-			Set<Client> client) {
+	public Product(long id, String name, String category, int quantity, double price, String specification, String description,
+			List<Item> items) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.category = category;
 		this.quantity = quantity;
 		this.price = price;
 		this.specification = specification;
 		this.description = description;
-		this.client = client;
+		this.items = items;
 
 	}
 
@@ -107,14 +110,22 @@ public class Product {
 		this.description = description;
 	}
 
-	public Set<Client> getClient() {
-		return client;
+	public List<Item> getItems() {
+		return items;
 	}
 
-	public void setClient(Set<Client> client) {
-		this.client = client;
+	public void setItems(List<Item> items) {
+		this.items = items;
 	}
 
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+	
 	
 
 }

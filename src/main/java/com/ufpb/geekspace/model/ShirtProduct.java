@@ -1,7 +1,6 @@
 package com.ufpb.geekspace.model;
 
-
-import java.util.Set;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,11 +18,10 @@ public class ShirtProduct extends Product {
 
 	}
 
-	public ShirtProduct(long id, String name, int quantity, double price, String specification, String description,
-			Set<Client> client, String color, String genre) {
-		super(id, name, quantity, price, specification, description, client);
-		this.color = color;
-		this.genre = genre;
+	public ShirtProduct(long id, String name, String category, int quantity, double price, String specification,
+			String description, List<Item> items) {
+		super(id, name, category, quantity, price, specification, description, items);
+
 	}
 
 	public String getColor() {

@@ -1,17 +1,16 @@
 package com.ufpb.geekspace.model;
 
 import java.util.List;
-import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 
@@ -29,13 +28,9 @@ public class Client {
 	private String password;
 	@Column(name = "EMAIL")
 	private String email;
-	@ManyToMany
-	@JoinTable(
-	  name = "shopping_cart", 
-	  joinColumns = @JoinColumn(name = "client_id"), 
-	  inverseJoinColumns = @JoinColumn(name = "product_id"))
-	private Set<Product> shoppingCart;
-	
+	@JsonIgnore
+	@OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
+	private ShoppingCart shoppingCart;
 	@OneToMany(mappedBy = "client")
 	private List<Sale> sales;
 
@@ -43,7 +38,7 @@ public class Client {
 	}
 
 	public Client(long id, String firstName, String lastName, String password, String email,
-			Set<Product> shoppingCart) {
+			ShoppingCart shoppingCart) {
 		super();
 		this.id = id;
 		this.firstName = firstName;
@@ -93,11 +88,11 @@ public class Client {
 		this.email = email;
 	}
 
-	public Set<Product> getCart() {
+	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
 
-	public void setCart(Set<Product> shoppingCart) {
+	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
 

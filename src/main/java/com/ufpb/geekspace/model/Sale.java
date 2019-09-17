@@ -1,5 +1,6 @@
 package com.ufpb.geekspace.model;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -7,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
@@ -21,9 +23,9 @@ public class Sale {
 	@ManyToOne
 	@JoinColumn(name="client_id", nullable = false)
 	private Client client;
-	
-	
-//	private ShoppingCart items;
+	@OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
+	private ShoppingCart shoppingCart;
 	
 	@Column(name = "PAYMENT")
 	private String payment;
@@ -51,12 +53,13 @@ public class Sale {
 	
 	public Sale() {}
 	
-	public Sale(int id, Client client, ShoppingCart items, String payment, String cep, String street, String number,
-			String neighborhood, String city, String state, String complement) {
-		super();
+	
+
+	public Sale(long id, Client client, ShoppingCart shoppingCart, String payment, String cep, String street,
+			String number, String neighborhood, String city, String state, String complement) {
 		this.id = id;
 		this.client = client;
-//		this.items = items;
+		this.shoppingCart = shoppingCart;
 		this.payment = payment;
 		this.cep = cep;
 		this.street = street;
@@ -66,6 +69,8 @@ public class Sale {
 		this.state = state;
 		this.complement = complement;
 	}
+
+
 
 	public long getId() {
 		return id;
@@ -82,14 +87,6 @@ public class Sale {
 	public void setClient(Client client) {
 		this.client = client;
 	}
-
-//	public ShoppingCart getItems() {
-//		return items;
-//	}
-
-//	public void setItems(ShoppingCart items) {
-//		this.items = items;
-//	}
 
 	public String getPayment() {
 		return payment;
@@ -154,6 +151,20 @@ public class Sale {
 	public void setComplement(String complement) {
 		this.complement = complement;
 	}
+
+
+
+	public ShoppingCart getShoppingCart() {
+		return shoppingCart;
+	}
+
+
+
+	public void setShoppingCart(ShoppingCart shoppingCart) {
+		this.shoppingCart = shoppingCart;
+	}
+	
+	
 	
 
 }
