@@ -31,9 +31,9 @@ public class SaleController {
 		return saleService.retrieveOneSale(saleId);
 	}
 	
-	@PostMapping(value = "/new")
-	public ResponseEntity<?> newSale(@RequestBody Sale sale) {
-		return saleService.newSale(sale);
+	@PostMapping(value = "/new/{shoppingCartId}")
+	public ResponseEntity<?> newSale(@RequestBody Sale sale, @PathVariable long shoppingCartId) {
+		return saleService.newSale(sale, shoppingCartId);
 	}
 	
 

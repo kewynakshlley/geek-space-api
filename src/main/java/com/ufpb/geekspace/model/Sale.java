@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @Entity
@@ -22,9 +23,11 @@ public class Sale {
 	
 	@ManyToOne
 	@JoinColumn(name="client_id", nullable = false)
+	@JsonIgnore
 	private Client client;
-	@OneToOne(cascade = CascadeType.ALL)
+	@OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
+	@JsonIgnore
 	private ShoppingCart shoppingCart;
 	
 	@Column(name = "PAYMENT")

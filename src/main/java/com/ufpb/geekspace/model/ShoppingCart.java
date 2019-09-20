@@ -1,9 +1,8 @@
 package com.ufpb.geekspace.model;
 
 
-import java.util.ArrayList;
+
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -34,20 +33,20 @@ public class ShoppingCart {
 	@JsonIgnore
 	private Sale sale;
 	@Column(name = "SUB_TOTAL")
-	private int subTotal;
+	private int total;
 
 	public ShoppingCart() {
 
 	}
 
-	public ShoppingCart(long id, Client client, Sale sale, int subTotal, Item... items) {
+	public ShoppingCart(long id, Client client, Sale sale, int total, Item... items) {
 		super();
 		this.id = id;
 		this.client = client;
 		this.items = Stream.of(items).collect(Collectors.toSet());
 		this.items.forEach(x -> x.setShoppingCart(this));
 		this.sale = sale;
-		this.subTotal =  subTotal;
+		this.total =  total;
 	}
 
 	public long getId() {
@@ -72,11 +71,6 @@ public class ShoppingCart {
 
 	public void setItems(Set<Item> items) {
 		this.items = items;
-		/*this.items.clear();
-		for(Item item: items) {
-			item.setShoppingCart(this);
-			this.items.add(item);
-		}*/
 		
 	}
 
@@ -88,11 +82,11 @@ public class ShoppingCart {
 		this.sale = sale;
 	}
 
-	public int getSubTotal() {
-		return subTotal;
+	public int getTotal() {
+		return total;
 	}
 
-	public void setSubTotal(int subTotal) {
-		this.subTotal = subTotal;
+	public void setTotal(int total) {
+		this.total = total;
 	}
 }

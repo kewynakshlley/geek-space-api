@@ -19,7 +19,7 @@ public class Item {
 	@Column(name = "QUANTITY")
 	private int quantity;
 	@Column(name = "TOTAL_VALUE")
-	private double totalValue;
+	private double subtotal;
 	@JsonIgnore
 	@ManyToOne
 	//@JoinColumn(name = "shopping_cart_id")
@@ -28,11 +28,11 @@ public class Item {
 	public Item() {
 	}
 
-	public Item(long id, Product product, int quantity, double totalValue, ShoppingCart shoppingCart) {
+	public Item(long id, Product product, int quantity, double subtotal, ShoppingCart shoppingCart) {
 		this.id = id;
 		this.product = product;
 		this.quantity = quantity;
-		this.totalValue = totalValue;
+		this.subtotal = subtotal;
 		this.shoppingCart = shoppingCart;
 	}
 
@@ -60,12 +60,12 @@ public class Item {
 		this.quantity = quantity;
 	}
 
-	public double getTotalValue() {
-		return totalValue;
+	public double getSubValue() {
+		return subtotal;
 	}
 
-	public void setTotalValue(double totalValue) {
-		this.totalValue = totalValue;
+	public void setsubTotal(double subtotal) {
+		this.subtotal = subtotal;
 	}
 
 	public ShoppingCart getShoppingCart() {
