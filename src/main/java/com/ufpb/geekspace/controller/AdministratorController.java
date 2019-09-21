@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Administrator;
 import com.ufpb.geekspace.service.AdministratorService;
 
@@ -35,17 +36,17 @@ public class AdministratorController {
 	}
 	
 	@PostMapping(value = "/new")
-	public ResponseEntity<?> createAdministrator(@RequestBody Administrator administrator) {
+	public ResponseEntity<?> createAdministrator(@RequestBody Administrator administrator) throws Exception {
 		return administratorService.createAdministrator(administrator);
 	}
 	
 	@PutMapping
-	public void editAdministrator(@RequestBody Administrator administrator) {
+	public void editAdministrator(@RequestBody Administrator administrator) throws DataNotFoundException {
 		administratorService.editAdministrator(administrator);
 	}
 	
 	@DeleteMapping(value = "/{administratorId}")
-	public void deleteAdministrator(@PathVariable long administratorId) {
+	public void deleteAdministrator(@PathVariable long administratorId) throws DataNotFoundException {
 		administratorService.deleteAdministrator(administratorId);
 	}
 	

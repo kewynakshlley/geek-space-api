@@ -7,4 +7,5 @@ import com.ufpb.geekspace.model.Client;
 @Repository
 public interface ClientRepository extends JpaRepository<Client, Long>{
 	Client findByEmailAndPassword(String email, String password);
+	Client findByEmail(String email);
 }

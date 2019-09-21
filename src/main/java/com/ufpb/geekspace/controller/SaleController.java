@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufpb.geekspace.exception.DataNotFoundException;
+import com.ufpb.geekspace.exception.StockException;
 import com.ufpb.geekspace.model.Sale;
 import com.ufpb.geekspace.service.SaleService;
 
@@ -27,12 +29,12 @@ public class SaleController {
 	}
 	
 	@GetMapping(value = "/{saleId}")
-	public Sale retrieveOneSale(@PathVariable long saleId) {
+	public Sale retrieveOneSale(@PathVariable long saleId) throws DataNotFoundException {
 		return saleService.retrieveOneSale(saleId);
 	}
 	
 	@PostMapping(value = "/new/{shoppingCartId}")
-	public ResponseEntity<?> newSale(@RequestBody Sale sale, @PathVariable long shoppingCartId) {
+	public ResponseEntity<?> newSale(@RequestBody Sale sale, @PathVariable long shoppingCartId) throws StockException {
 		return saleService.newSale(sale, shoppingCartId);
 	}
 	

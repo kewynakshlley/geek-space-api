@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufpb.geekspace.dto.ItemDTO;
+import com.ufpb.geekspace.exception.DataAlreadyExistsException;
+import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
 import com.ufpb.geekspace.model.ShoppingCart;
 import com.ufpb.geekspace.service.ClientService;
@@ -34,27 +36,27 @@ public class ClientController {
 	}
 	
 	@GetMapping(value = "/{clientId}")
-	public Client retrieveOneClient(@PathVariable long clientId) {
+	public Client retrieveOneClient(@PathVariable long clientId) throws DataNotFoundException {
 		return clientService.retrieveOneClient(clientId);
 	}
 	
 	@PostMapping(value = "/new")
-	public ResponseEntity<?> createClient(@RequestBody Client cliente) {
+	public ResponseEntity<?> createClient(@RequestBody Client cliente) throws DataAlreadyExistsException {
 		return clientService.createClient(cliente);
 	}
 	
 	@PutMapping
-	public void editClient(@RequestBody Client client) {
+	public void editClient(@RequestBody Client client) throws DataNotFoundException {
 		clientService.editClient(client);
 	}
 	
 	@DeleteMapping(value = "/{clientId}")
-	public void deleteClient(@PathVariable long clientId) {
+	public void deleteClient(@PathVariable long clientId) throws DataNotFoundException {
 		clientService.deleteClient(clientId);
 	}
 	
 	@GetMapping(value = "/{clientId}/shopping-cart")
-	public ShoppingCart getShoppingCart(@PathVariable long clientId){
+	public ShoppingCart getShoppingCart(@PathVariable long clientId) throws DataNotFoundException{
 		return shoppingCartService.retrieveShoppingCart(clientId);
 	}
 	
@@ -64,13 +66,13 @@ public class ClientController {
 	}
 	
 	@PostMapping(value = "/{clientId}/create-cart")
-	public void createShoppingCart(@RequestBody ShoppingCart shoppingCart, @PathVariable long clientId) {
+	public void createShoppingCart(@RequestBody ShoppingCart shoppingCart, @PathVariable long clientId) throws DataNotFoundException {
 		shoppingCartService.createShoppingCart(shoppingCart, clientId);
 		
 	}
 	
-	@DeleteMapping(value = "/{clientId}/remove-item-from-cart/{itemId}")
-	public void removeFromCart(@RequestBody ItemDTO item, @PathVariable long clientId, @PathVariable long itemId) {
-		shoppingCartService.removeFromCart(clientId, itemId);
+	@DeleteMapping(value = "/{clientId}/remove-item/{itemId}")
+	public void removeItem(@RequestBody ItemDTO item, @PathVariable long clientId, @PathVariable long itemId) {
+		shoppingCartService.removeItem(clientId, itemId);
 	}
 }
