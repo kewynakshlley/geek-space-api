@@ -20,19 +20,18 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import com.ufpb.geekspace.model.Administrator;
-import com.ufpb.geekspace.repository.AdministratorRepository;
-import com.ufpb.geekspace.service.AdministratorService;
-
+import com.ufpb.geekspace.model.Client;
+import com.ufpb.geekspace.repository.ClientRepository;
+import com.ufpb.geekspace.service.ClientService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class AdministratorControllerTest {
+public class ClientControllerTest {
 
 	@InjectMocks
-	private AdministratorService service;
+	private ClientService service;
 	
 	@Mock
-	private AdministratorRepository repository;
+	private ClientRepository repository;
 
 	@Before
 	public void init() {
@@ -40,41 +39,41 @@ public class AdministratorControllerTest {
 	}
 	
 	@Test
-	public void getAdministratorsTest() {
+	public void getClientsTest() {
 		when(repository.findAll()).
-		thenReturn(new ArrayList<Administrator>(List.of(
-				new Administrator(65, "kewynakshlley@gmail.com", "123"),
-				new Administrator(100, "fulano@gmail.com", "123"))));
-		List<Administrator> laux = service.retrievAllAdmins();
+		thenReturn(new ArrayList<Client>(List.of(
+				new Client(65, "kewynakshlley@gmail.com", "123", null, null, null, null),
+				new Client(100, "fulano@gmail.com", "123", null, null, null, null))));
+		List<Client> laux = service.retrievAllClients();
 		verify(repository).findAll();
 		assertEquals(2, laux.size());
 	}
 	
 	@Test
-	public void getAdministratorTest() {
-		Administrator adm = new Administrator();
-		adm.setId(1l);
-		when(repository.getOne(1l)).thenReturn(adm);
-		Administrator admAux = service.retrieveOneAdmin(1L);
+	public void getClientTest() {
+		Client client = new Client();
+		client.setId(1l);
+		when(repository.getOne(1l)).thenReturn(client);
+		Client clientAux = service.retrieveOneClient(1L);
 		verify(repository).getOne(1l);
-		assertEquals(1l, admAux.getId());
+		assertEquals(1l, clientAux.getId());
 	}
 	
 	@Test
-	public void saveAdministratorTest() {
-		Administrator adm = new Administrator(1, "kewynakshlley@gmail.com", "123");
+	public void saveClientTest() {
+		Client client = new Client(1, "kewynakshlley@gmail.com", "123", null, null, null, null);
 		
-		when(repository.save(adm)).thenReturn(adm);
-		ResponseEntity<?> rax = service.createAdmin(adm);
-		verify(repository).save(adm);
+		when(repository.save(client)).thenReturn(client);
+		ResponseEntity<?> rax = service.createClient(client);
+		verify(repository).save(client);
 		assertTrue("should be true", rax != null);
 	}
 	
 	@Test
-	public void deleteAdministratorTest() {
-		Administrator adm = new Administrator(2, "kewynakshlley@gmail.com", "123");
-		service.removeAdmin(adm.getId());
-		verify(repository, times(1)).deleteById(adm.getId());
+	public void deleteClientTest() {
+		Client client = new Client(2, "kewynakshlley@gmail.com", "123", null, null, null, null);
+		service.deleteClient(client.getId());
+		verify(repository, times(1)).deleteById(client.getId());
 	}
 
 }

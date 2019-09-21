@@ -1,5 +1,7 @@
 package com.ufpb.geekspace.security;
 
+import java.util.stream.Collectors;
+
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -8,15 +10,16 @@ import org.springframework.security.core.AuthenticationException;
 
 import com.ufpb.geekspace.config.AppContext;
 import com.ufpb.geekspace.dto.LoginDTO;
-import com.ufpb.geekspace.model.Administrator;
-import com.ufpb.geekspace.repository.AdministratorRepository;
+import com.ufpb.geekspace.model.AbstractPerson;
+import com.ufpb.geekspace.model.Client;
+import com.ufpb.geekspace.repository.ClientRepository;
 
 public class JwtAuthenticationManager implements AuthenticationManager {
-	private AdministratorRepository administratorRepository;
+	private ClientRepository clientRepository;
 
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
-		Administrator user = this.getAdministratorRepository().findByEmailAndPassword(auth.getName(), (String) auth.getCredentials());
+		Client user = this.getClientRepository().findByEmailAndPassword(auth.getName(), (String) auth.getCredentials());
 		if(user != null) {
 			return new UsernamePasswordAuthenticationToken(toDTO(user), auth.getCredentials());
 		}
@@ -25,20 +28,20 @@ public class JwtAuthenticationManager implements AuthenticationManager {
 	}
 
 	
-	private LoginDTO toDTO(Administrator user) {
+	private LoginDTO toDTO(AbstractPerson user) {
 		LoginDTO loginDTO = new LoginDTO();
 		loginDTO.setLogin(user.getEmail());
-		loginDTO.setId(user.getId());
+		loginDTO.setRoles(user.getRole().stream().map(item -> "ROLE_" + item.getCodeName()).collect(Collectors.toList()));
 		return loginDTO;
 	}
 	
-	protected AdministratorRepository getAdministratorRepository() {
+	protected ClientRepository getClientRepository() {
 
-        if (this.administratorRepository == null) {
-            this.administratorRepository = AppContext.getBean(AdministratorRepository.class);
+        if (this.clientRepository == null) {
+            this.clientRepository = AppContext.getBean(ClientRepository.class);
         }
 
-        return this.administratorRepository;
+        return this.clientRepository;
     }
 
 }

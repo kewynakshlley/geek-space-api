@@ -1,7 +1,6 @@
 package com.ufpb.geekspace.service;
 
 
-import java.util.List;
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +12,6 @@ import com.ufpb.geekspace.model.Product;
 import com.ufpb.geekspace.model.ShoppingCart;
 import com.ufpb.geekspace.repository.ClientRepository;
 import com.ufpb.geekspace.repository.GenericProductRepository;
-import com.ufpb.geekspace.repository.ItemRepository;
 import com.ufpb.geekspace.repository.ShirtProductRepository;
 import com.ufpb.geekspace.repository.ShoppingCartRepository;
 
@@ -26,8 +24,6 @@ public class ShoppingCartService {
 	private ShirtProductRepository shirtProductRepository;
 	@Autowired
 	private GenericProductRepository genericProductRepository;
-	@Autowired
-	private ItemRepository itemRepository;
 	
 	@Autowired
 	private ClientRepository clientRepository;

@@ -22,11 +22,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter implements WebM
 	protected void configure(HttpSecurity http) throws Exception {
 		http.cors().and().csrf().disable().authorizeRequests()
 				.antMatchers(HttpMethod.POST, "/login").permitAll()
-				.antMatchers(HttpMethod.POST, "/administrators/new").permitAll()
+				.antMatchers(HttpMethod.POST, "/clients/new").permitAll()
 				.antMatchers("/v2/api-docs", "/configuration/**", "/swagger*/**", "/webjars/**").permitAll()
 				.antMatchers(HttpMethod.GET, "/swagger-ui.html").permitAll()
 				.antMatchers(HttpMethod.GET, "/v2/api-docs").permitAll()
-				.antMatchers(HttpMethod.GET, "/administrators").permitAll()
 				.anyRequest().authenticated()
 				.and()
 				.sessionManagement()
