@@ -14,13 +14,19 @@ public class ShirtProduct extends Product {
 	@Column(name = " GENRE")
 	private String genre;
 
+	@Column(name = "SIZE")
+	private String size;
+
 	public ShirtProduct() {
 
 	}
 
 	public ShirtProduct(long id, String name, String category, int quantity, double price, String specification,
-			String description, List<Item> items) {
-		super(id, name, category, quantity, price, specification, description, items);
+			String description, List<Item> items, String image, String color, String genre, String size) {
+		super(id, name, category, quantity, price, specification, description, items, image);
+		this.color = color;
+		this.genre = genre;
+		this.size = size;
 
 	}
 
@@ -38,6 +44,14 @@ public class ShirtProduct extends Product {
 
 	public void setGenre(String genre) {
 		this.genre = genre;
+	}
+
+	public String getSize() {
+		return size;
+	}
+
+	public void setSize(String size) {
+		this.size = size;
 	}
 
 }

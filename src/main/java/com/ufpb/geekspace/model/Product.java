@@ -13,6 +13,7 @@ import javax.persistence.OneToMany;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.InheritanceType;
+import javax.persistence.Lob;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -43,13 +44,16 @@ public class Product {
 	@JsonIgnore
 	@OneToMany(mappedBy = "product")
 	private List<Item> items;
+	@Lob
+	@Column(name = "IMAGE", length = Integer.MAX_VALUE)
+	private String image;
 
 	public Product() {
 
 	}
 
 	public Product(long id, String name, String category, int quantity, double price, String specification, String description,
-			List<Item> items) {
+			List<Item> items, String image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -59,6 +63,7 @@ public class Product {
 		this.specification = specification;
 		this.description = description;
 		this.items = items;
+		this.image = image;
 
 	}
 
@@ -125,6 +130,16 @@ public class Product {
 	public void setCategory(String category) {
 		this.category = category;
 	}
+
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+	
+	
 	
 	
 
