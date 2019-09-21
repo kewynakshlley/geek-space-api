@@ -20,6 +20,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import com.ufpb.geekspace.exception.DataAlreadyExistsException;
+import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
 import com.ufpb.geekspace.repository.ClientRepository;
 import com.ufpb.geekspace.service.ClientService;
@@ -50,7 +52,7 @@ public class ClientControllerTest {
 	}
 	
 	@Test
-	public void getClientTest() {
+	public void getClientTest() throws DataNotFoundException {
 		Client client = new Client();
 		client.setId(1l);
 		when(repository.getOne(1l)).thenReturn(client);
@@ -60,7 +62,7 @@ public class ClientControllerTest {
 	}
 	
 	@Test
-	public void saveClientTest() {
+	public void saveClientTest() throws DataAlreadyExistsException {
 		Client client = new Client(1, "kewynakshlley@gmail.com", "123", null, null, null, null);
 		
 		when(repository.save(client)).thenReturn(client);
@@ -70,7 +72,7 @@ public class ClientControllerTest {
 	}
 	
 	@Test
-	public void deleteClientTest() {
+	public void deleteClientTest() throws DataNotFoundException {
 		Client client = new Client(2, "kewynakshlley@gmail.com", "123", null, null, null, null);
 		service.deleteClient(client.getId());
 		verify(repository, times(1)).deleteById(client.getId());
