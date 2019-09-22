@@ -17,6 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.Profile;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -27,6 +28,7 @@ import com.ufpb.geekspace.repository.ClientRepository;
 import com.ufpb.geekspace.service.ClientService;
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Profile("dev")
 public class ClientControllerTest {
 
 	@InjectMocks
