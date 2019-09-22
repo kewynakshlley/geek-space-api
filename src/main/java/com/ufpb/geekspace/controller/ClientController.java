@@ -13,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.ufpb.geekspace.dto.ItemDTO;
 import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
@@ -84,7 +83,7 @@ public class ClientController {
 		shoppingCartService.removeItem(clientId, itemId);
 	}
 	
-	@PostMapping(value = "{clientId}/add-to-favorites/{productId}")
+	@PostMapping(value = "{clientId}/favorites/new/{productId}")
 	public void addToFavorites(@PathVariable long clientId, @PathVariable long productId) throws DataNotFoundException {
 		clientService.addToFavorites(clientId, productId);
 	}
@@ -92,5 +91,10 @@ public class ClientController {
 	@GetMapping(value = "{clientId}/favorites")
 	public List<Product> getFavorites(@PathVariable long clientId){
 		return clientService.getFavorites(clientId);
+	}
+	
+	@DeleteMapping(value = "{clientId}/favorites/{productId}")
+	public void deleteFavorite(@PathVariable long clientId, @PathVariable long productId) {
+		clientService.deleteFavorite(clientId, productId);
 	}
 }

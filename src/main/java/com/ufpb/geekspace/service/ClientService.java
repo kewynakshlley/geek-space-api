@@ -94,4 +94,16 @@ public class ClientService {
 		return caux.getFavorites();
 	}
 
+	public void deleteFavorite(long clientId, long productId) {
+		Client caux = clientRepository.getOne(clientId);
+		Product aux = null;
+		for(Product p: caux.getFavorites()) {
+			if(p.getId() == productId)
+				aux = p;
+		}
+		caux.getFavorites().remove(aux);
+		clientRepository.save(caux);
+		
+	}
+
 }
