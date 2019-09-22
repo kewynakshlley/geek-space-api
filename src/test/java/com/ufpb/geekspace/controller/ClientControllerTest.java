@@ -44,8 +44,8 @@ public class ClientControllerTest {
 	public void getClientsTest() {
 		when(repository.findAll()).
 		thenReturn(new ArrayList<Client>(List.of(
-				new Client(65, "kewynakshlley@gmail.com", "123", null, null, null, null),
-				new Client(100, "fulano@gmail.com", "123", null, null, null, null))));
+				new Client(),
+				new Client())));
 		List<Client> laux = service.retrievAllClients();
 		verify(repository).findAll();
 		assertEquals(2, laux.size());
@@ -63,7 +63,7 @@ public class ClientControllerTest {
 	
 	@Test
 	public void saveClientTest() throws DataAlreadyExistsException {
-		Client client = new Client(1, "kewynakshlley@gmail.com", "123", null, null, null, null);
+		Client client = new Client();
 		
 		when(repository.save(client)).thenReturn(client);
 		ResponseEntity<?> rax = service.createClient(client);
@@ -73,7 +73,7 @@ public class ClientControllerTest {
 	
 	@Test
 	public void deleteClientTest() throws DataNotFoundException {
-		Client client = new Client(2, "kewynakshlley@gmail.com", "123", null, null, null, null);
+		Client client = new Client("", null, null, null);
 		service.deleteClient(client.getId());
 		verify(repository, times(1)).deleteById(client.getId());
 	}

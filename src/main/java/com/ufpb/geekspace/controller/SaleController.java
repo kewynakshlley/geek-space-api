@@ -19,24 +19,23 @@ import com.ufpb.geekspace.service.SaleService;
 @RestController
 @RequestMapping(value = "sales")
 public class SaleController {
-	
+
 	@Autowired
 	private SaleService saleService;
-	
+
 	@GetMapping
-	public List<Sale> retrieveAllSales(){
+	public List<Sale> retrieveAllSales() {
 		return saleService.retrieveAllSales();
 	}
-	
+
 	@GetMapping(value = "/{saleId}")
 	public Sale retrieveOneSale(@PathVariable long saleId) throws DataNotFoundException {
 		return saleService.retrieveOneSale(saleId);
 	}
-	
+
 	@PostMapping(value = "/new/{shoppingCartId}")
 	public ResponseEntity<?> newSale(@RequestBody Sale sale, @PathVariable long shoppingCartId) throws StockException {
 		return saleService.newSale(sale, shoppingCartId);
 	}
-	
 
 }

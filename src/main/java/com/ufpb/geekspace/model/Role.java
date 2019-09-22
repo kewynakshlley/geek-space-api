@@ -6,16 +6,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 @Entity
-public class Role extends AbstractRole{
+public class Role extends AbstractRole {
 
 	@Id
 	@GeneratedValue
 	private long id;
 	@Column
 	private String description;
-	
-	public Role() {}
-	
+
+	public Role() {
+	}
+
 	public Role(int id, String description) {
 		this.id = id;
 		this.description = description;

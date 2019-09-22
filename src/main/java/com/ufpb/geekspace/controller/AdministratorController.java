@@ -1,6 +1,5 @@
 package com.ufpb.geekspace.controller;
 
-
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,31 +22,30 @@ import com.ufpb.geekspace.service.AdministratorService;
 public class AdministratorController {
 	@Autowired
 	private AdministratorService administratorService;
-	
-	
+
 	@GetMapping
-	public List<Administrator> retrieveAdministrators(){
+	public List<Administrator> retrieveAdministrators() {
 		return administratorService.retrieveAdministrators();
 	}
-	
+
 	@GetMapping(value = "/{administratorId}")
 	public Administrator retrieveAdministrator(@PathVariable long administratorId) {
 		return administratorService.retrieveAdministrator(administratorId);
 	}
-	
+
 	@PostMapping(value = "/new")
 	public ResponseEntity<?> createAdministrator(@RequestBody Administrator administrator) throws Exception {
 		return administratorService.createAdministrator(administrator);
 	}
-	
+
 	@PutMapping
 	public void editAdministrator(@RequestBody Administrator administrator) throws DataNotFoundException {
 		administratorService.editAdministrator(administrator);
 	}
-	
+
 	@DeleteMapping(value = "/{administratorId}")
 	public void deleteAdministrator(@PathVariable long administratorId) throws DataNotFoundException {
 		administratorService.deleteAdministrator(administratorId);
 	}
-	
+
 }

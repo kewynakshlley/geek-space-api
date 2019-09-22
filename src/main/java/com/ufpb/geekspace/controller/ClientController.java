@@ -26,51 +26,52 @@ import com.ufpb.geekspace.service.ShoppingCartService;
 public class ClientController {
 	@Autowired
 	private ClientService clientService;
-	
+
 	@Autowired
 	private ShoppingCartService shoppingCartService;
-	
+
 	@GetMapping
-	public List<Client> retrievAllClients(){
+	public List<Client> retrievAllClients() {
 		return clientService.retrievAllClients();
 	}
-	
+
 	@GetMapping(value = "/{clientId}")
 	public Client retrieveOneClient(@PathVariable long clientId) throws DataNotFoundException {
 		return clientService.retrieveOneClient(clientId);
 	}
-	
+
 	@PostMapping(value = "/new")
 	public ResponseEntity<?> createClient(@RequestBody Client cliente) throws DataAlreadyExistsException {
 		return clientService.createClient(cliente);
 	}
-	
+
 	@PutMapping
 	public void editClient(@RequestBody Client client) throws DataNotFoundException {
 		clientService.editClient(client);
 	}
-	
+
 	@DeleteMapping(value = "/{clientId}")
 	public void deleteClient(@PathVariable long clientId) throws DataNotFoundException {
 		clientService.deleteClient(clientId);
 	}
-	
+
 	@GetMapping(value = "/{clientId}/shopping-cart")
-	public ShoppingCart getShoppingCart(@PathVariable long clientId) throws DataNotFoundException{
+	public ShoppingCart getShoppingCart(@PathVariable long clientId) throws DataNotFoundException {
 		return shoppingCartService.retrieveShoppingCart(clientId);
 	}
-	
+
 	@PutMapping(value = "{clientId}/shopping-cart/edit")
 	public void editShoppingCart(@RequestBody ShoppingCart shoppingCart) {
 		shoppingCartService.editShoppingCart(shoppingCart);
 	}
-	
+
 	@PostMapping(value = "/{clientId}/create-cart")
-	public void createShoppingCart(@RequestBody ShoppingCart shoppingCart, @PathVariable long clientId) throws DataNotFoundException {
+	public void createShoppingCart(@RequestBody ShoppingCart shoppingCart, @PathVariable long clientId)
+			throws DataNotFoundException {
 		shoppingCartService.createShoppingCart(shoppingCart, clientId);
-		
+
 	}
-	
+
 	@DeleteMapping(value = "/{clientId}/remove-item/{itemId}")
 	public void removeItem(@RequestBody ItemDTO item, @PathVariable long clientId, @PathVariable long itemId) {
 		shoppingCartService.removeItem(clientId, itemId);

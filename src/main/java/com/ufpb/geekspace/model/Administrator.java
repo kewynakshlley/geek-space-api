@@ -1,7 +1,5 @@
 package com.ufpb.geekspace.model;
 
-
-
 import java.util.Set;
 
 public class Administrator {
@@ -10,8 +8,9 @@ public class Administrator {
 	private String email;
 	private String password;
 	private Set<Role> roles;;
-	
-	public Administrator() {}
+
+	public Administrator() {
+	}
 
 	public Administrator(long id, String email, String password, Set<Role> roles) {
 		super();
@@ -28,19 +27,19 @@ public class Administrator {
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
 	}
-	
+
 	public String getEmail() {
 		return email;
 	}
-	
+
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public String getPassword() {
 		return password;
 	}
-	
+
 	public void setPassword(String password) {
 		this.password = password;
 	}

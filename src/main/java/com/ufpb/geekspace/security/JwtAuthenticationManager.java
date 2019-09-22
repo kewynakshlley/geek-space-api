@@ -20,28 +20,29 @@ public class JwtAuthenticationManager implements AuthenticationManager {
 	@Override
 	public Authentication authenticate(Authentication auth) throws AuthenticationException {
 		Client user = this.getClientRepository().findByEmailAndPassword(auth.getName(), (String) auth.getCredentials());
-		if(user != null) {
+		if (user != null) {
 			return new UsernamePasswordAuthenticationToken(toDTO(user), auth.getCredentials());
 		}
-		
+
 		throw new BadCredentialsException("User and/or password are invalids.");
 	}
 
-	
 	private LoginDTO toDTO(AbstractPerson user) {
 		LoginDTO loginDTO = new LoginDTO();
+		loginDTO.setId(user.getId());
 		loginDTO.setLogin(user.getEmail());
-		loginDTO.setRoles(user.getRole().stream().map(item -> "ROLE_" + item.getCodeName()).collect(Collectors.toList()));
+		loginDTO.setRoles(
+				user.getRole().stream().map(item -> "ROLE_" + item.getCodeName()).collect(Collectors.toList()));
 		return loginDTO;
 	}
-	
+
 	protected ClientRepository getClientRepository() {
 
-        if (this.clientRepository == null) {
-            this.clientRepository = AppContext.getBean(ClientRepository.class);
-        }
+		if (this.clientRepository == null) {
+			this.clientRepository = AppContext.getBean(ClientRepository.class);
+		}
 
-        return this.clientRepository;
-    }
+		return this.clientRepository;
+	}
 
 }

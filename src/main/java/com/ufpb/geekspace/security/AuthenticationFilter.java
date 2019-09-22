@@ -27,13 +27,13 @@ public class AuthenticationFilter extends GenericFilterBean {
 			if (RequestMethod.OPTIONS.name().equalsIgnoreCase(req.getMethod())) {
 				res.addHeader("Access-Control-Allow-Origin", "*");
 				res.setHeader("Access-Control-Allow-Methods", "POST, GET, DELETE, PUT, OPTIONS");
-                res.setStatus(HttpServletResponse.SC_OK);
-                return;
-            }
+				res.setStatus(HttpServletResponse.SC_OK);
+				return;
+			}
 			Authentication authentication = TokenAuthenticationService.getAuthentication(req);
 			SecurityContextHolder.getContext().setAuthentication(authentication);
 			filterChain.doFilter(request, response);
-		}catch(JwtException e) {
+		} catch (JwtException e) {
 			((HttpServletResponse) response).setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 		}
 	}

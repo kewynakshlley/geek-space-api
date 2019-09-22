@@ -1,6 +1,5 @@
 package com.ufpb.geekspace.service;
 
-
 import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,40 +18,42 @@ import com.ufpb.geekspace.util.UserUtil;
 
 @Service
 public class ShoppingCartService {
-	
+
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
 	@Autowired
 	private ShirtProductRepository shirtProductRepository;
 	@Autowired
 	private GenericProductRepository genericProductRepository;
-	
+
 	@Autowired
 	private ClientRepository clientRepository;
-	
+
 	public ShoppingCart retrieveShoppingCart(long clientId) throws DataNotFoundException {
 		Client c = clientRepository.getOne(clientId);
-		if(c ==null)
+		if (c == null)
 			throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
 		ShoppingCart sc = shoppingCartRepository.findByClientId(clientId);
 		return sc;
 	}
-	
-	public void createShoppingCart(ShoppingCart shoppingCart, long clientId) throws DataNotFoundException{
+
+	public void createShoppingCart(ShoppingCart shoppingCart, long clientId) throws DataNotFoundException {
 		Client caux = clientRepository.getOne(clientId);
-		if(caux == null)
+		if (caux == null)
 			throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
 		Set<Item> iaux = shoppingCart.getItems();
-		
-		for(Item i: iaux) {
+
+		for (Item i : iaux) {
 			Product gp = genericProductRepository.getOne(i.getProduct().getId());
 			Product sp = shirtProductRepository.getOne(i.getProduct().getId());
-			if(gp != null) {
+			if (gp != null) {
 				i.setProduct(gp);
 				continue;
-			}if(sp != null) {
+			}
+			if (sp != null) {
 				i.setProduct(sp);
-			}i.setShoppingCart(shoppingCart);
+			}
+			i.setShoppingCart(shoppingCart);
 		}
 		shoppingCart.setItems(iaux);
 		shoppingCart.setClient(caux);
@@ -67,14 +68,13 @@ public class ShoppingCartService {
 
 	public void removeItem(long clientId, long itemId) {
 		ShoppingCart sc = shoppingCartRepository.findByClientId(clientId);
-		for(Item i: sc.getItems()) {
-			if(i.getId() == itemId) {
+		for (Item i : sc.getItems()) {
+			if (i.getId() == itemId) {
 				sc.getItems().remove(i);
 			}
 		}
 		shoppingCartRepository.save(sc);
 
 	}
-
 
 }

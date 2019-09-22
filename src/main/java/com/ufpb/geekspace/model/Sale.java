@@ -16,47 +16,46 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Sale {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long id;
-	
+
 	@ManyToOne
-	@JoinColumn(name="client_id", nullable = false)
+	@JoinColumn(name = "client_id", nullable = false)
 	@JsonIgnore
 	private Client client;
 	@OneToOne(cascade = CascadeType.MERGE)
-    @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
+	@JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
 	@JsonIgnore
 	private ShoppingCart shoppingCart;
-	
+
 	@Column(name = "PAYMENT")
 	private String payment;
-	
+
 	@Column(name = "CEP")
 	private String cep;
-	
+
 	@Column(name = "STREET")
 	private String street;
-	
+
 	@Column(name = "NUMBER")
 	private String number;
-	
+
 	@Column(name = "NEIGHBORHOOD")
 	private String neighborhood;
-	
+
 	@Column(name = "CITY")
 	private String city;
-	
+
 	@Column(name = "STATE")
 	private String state;
-	
+
 	@Column(name = "COMPLEMENT")
 	private String complement;
-	
-	public Sale() {}
-	
-	
+
+	public Sale() {
+	}
 
 	public Sale(long id, Client client, ShoppingCart shoppingCart, String payment, String cep, String street,
 			String number, String neighborhood, String city, String state, String complement) {
@@ -72,8 +71,6 @@ public class Sale {
 		this.state = state;
 		this.complement = complement;
 	}
-
-
 
 	public long getId() {
 		return id;
@@ -155,19 +152,12 @@ public class Sale {
 		this.complement = complement;
 	}
 
-
-
 	public ShoppingCart getShoppingCart() {
 		return shoppingCart;
 	}
 
-
-
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
-	
-	
-	
 
 }

@@ -15,25 +15,25 @@ public class ShirtProductService {
 
 	@Autowired
 	ShirtProductRepository camisaRepository;
-	
-	public List<ShirtProduct> retrievAllShirts(){
+
+	public List<ShirtProduct> retrievAllShirts() {
 		return camisaRepository.findAll();
 	}
-	
+
 	public ShirtProduct retrieveOneShirtProduct(long shirtId) {
 		return camisaRepository.getOne(shirtId);
 	}
-	
-	public ResponseEntity<?> createShirtProduct(ShirtProduct shirt){
+
+	public ResponseEntity<?> createShirtProduct(ShirtProduct shirt) {
 		ShirtProduct createdShirt = camisaRepository.save(shirt);
 		return new ResponseEntity<ShirtProduct>(createdShirt, HttpStatus.OK);
 	}
-	
-	public ResponseEntity<?> editShirtProduct(ShirtProduct shirt){
+
+	public ResponseEntity<?> editShirtProduct(ShirtProduct shirt) {
 		ShirtProduct createdShirt = camisaRepository.save(shirt);
 		return new ResponseEntity<ShirtProduct>(createdShirt, HttpStatus.OK);
 	}
-	
+
 	public void deleteShirtCamisa(long shirtId) {
 		camisaRepository.deleteById(shirtId);
 	}

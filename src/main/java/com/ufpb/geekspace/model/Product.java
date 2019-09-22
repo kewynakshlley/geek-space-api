@@ -26,7 +26,7 @@ public class Product {
 
 	@Column(name = "NAME")
 	private String name;
-	
+
 	@Column(name = "CATEGORY")
 	private String category;
 
@@ -52,8 +52,8 @@ public class Product {
 
 	}
 
-	public Product(long id, String name, String category, int quantity, double price, String specification, String description,
-			List<Item> items, String image) {
+	public Product(long id, String name, String category, int quantity, double price, String specification,
+			String description, List<Item> items, String image) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -138,9 +138,5 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
-	
-	
-	
-	
 
 }

@@ -8,13 +8,14 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
 @Entity
 public class Item {
 	@Id
 	@GeneratedValue
 	private long id;
 	@ManyToOne
-    @JoinColumn(name="product_id", nullable=false)
+	@JoinColumn(name = "product_id", nullable = false)
 	private Product product;
 	@Column(name = "QUANTITY")
 	private int quantity;
@@ -22,7 +23,6 @@ public class Item {
 	private double subtotal;
 	@JsonIgnore
 	@ManyToOne
-	//@JoinColumn(name = "shopping_cart_id")
 	private ShoppingCart shoppingCart;
 
 	public Item() {
@@ -75,7 +75,5 @@ public class Item {
 	public void setShoppingCart(ShoppingCart shoppingCart) {
 		this.shoppingCart = shoppingCart;
 	}
-	
-	
 
 }

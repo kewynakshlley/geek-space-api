@@ -1,7 +1,5 @@
 package com.ufpb.geekspace.model;
 
-
-
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -24,7 +22,7 @@ public class ShoppingCart {
 	@GeneratedValue
 	private long id;
 	@OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "client_id", referencedColumnName = "id")
+	@JoinColumn(name = "client_id", referencedColumnName = "id")
 	private Client client;
 	@OneToMany(cascade = CascadeType.ALL)
 	@JoinColumn(name = "shopping_cart_id")
@@ -32,7 +30,7 @@ public class ShoppingCart {
 	@OneToOne(mappedBy = "shoppingCart", cascade = CascadeType.ALL)
 	@JsonIgnore
 	private Sale sale;
-	@Column(name = "SUB_TOTAL")
+	@Column(name = "TOTAL")
 	private int total;
 
 	public ShoppingCart() {
@@ -46,7 +44,7 @@ public class ShoppingCart {
 		this.items = Stream.of(items).collect(Collectors.toSet());
 		this.items.forEach(x -> x.setShoppingCart(this));
 		this.sale = sale;
-		this.total =  total;
+		this.total = total;
 	}
 
 	public long getId() {
@@ -71,7 +69,7 @@ public class ShoppingCart {
 
 	public void setItems(Set<Item> items) {
 		this.items = items;
-		
+
 	}
 
 	public Sale getSale() {

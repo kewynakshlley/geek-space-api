@@ -22,29 +22,30 @@ public class GenericProductController {
 
 	@Autowired
 	private GenericProductService genericProductService;
-	
+
 	@GetMapping
-	public List<GenericProduct> retrievAllProduct(){
+	public List<GenericProduct> retrievAllProduct() {
 		return genericProductService.retrievAllProduct();
 	}
-	
+
 	@GetMapping(value = "/{productId}")
 	public GenericProduct retrieveOneProduct(@PathVariable long productId) {
 		return genericProductService.retrieveOneProduct(productId);
 	}
-	
+
 	@PostMapping(value = "/new")
 	public ResponseEntity<?> createProduct(@RequestBody GenericProduct product) {
 		return genericProductService.createProduct(product);
 	}
-	
+
 	@PutMapping
 	public void editProduct(@RequestBody GenericProduct product) {
 		genericProductService.editProduct(product);
 	}
-	
+
 	@DeleteMapping(value = "/{productId}")
 	public void deleteProduct(@PathVariable long productId) {
-		genericProductService.deleteProduct(productId);;
+		genericProductService.deleteProduct(productId);
+		;
 	}
 }

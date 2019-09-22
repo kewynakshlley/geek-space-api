@@ -22,7 +22,7 @@ import java.util.List;
 
 @Service
 public class SaleService {
-	
+
 	@Autowired
 	private SaleRepository saleRepository;
 	@Autowired
@@ -31,51 +31,49 @@ public class SaleService {
 	private GenericProductRepository genericProductRepository;
 	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
-	
-	
+
 	public List<Sale> retrieveAllSales() {
 		return saleRepository.findAll();
 	}
-	
+
 	public Sale retrieveOneSale(long saleId) throws DataNotFoundException {
 		Sale s = saleRepository.getOne(saleId);
-		if(s == null)
+		if (s == null)
 			throw new DataNotFoundException(SaleUtil.SALE_NOT_FOUND);
 		return saleRepository.getOne(saleId);
 	}
-	
-	public ResponseEntity<?> newSale(Sale sale, long shoppingCartId) throws StockException{
+
+	public ResponseEntity<?> newSale(Sale sale, long shoppingCartId) throws StockException {
 		ShoppingCart sc = shoppingCartRepository.getOne(shoppingCartId);
 		sale.setShoppingCart(sc);
 		sale.setClient(sc.getClient());
 		Sale newSale = saleRepository.save(sale);
-		for(Item i: sc.getItems()) {
+		for (Item i : sc.getItems()) {
 			ShirtProduct paux = null;
 			GenericProduct gaux = null;
 			paux = shirtProductRepository.getOne(i.getProduct().getId());
-			if(paux != null) {
+			if (paux != null) {
 				int pAuxQ = paux.getQuantity();
 				int iQ = i.getQuantity();
-				if((pAuxQ - iQ) < 0)
+				if ((pAuxQ - iQ) < 0)
 					throw new StockException(SaleUtil.OUT_OF_STOCK);
 				paux.setQuantity(pAuxQ - iQ);
 				shirtProductRepository.save(paux);
 				continue;
 			}
-			
+
 			gaux = genericProductRepository.getOne(i.getProduct().getId());
-			if(gaux != null) {
+			if (gaux != null) {
 				int gAuxQ = gaux.getQuantity();
 				int iQ = i.getQuantity();
-				if((gAuxQ - iQ) < 0)
+				if ((gAuxQ - iQ) < 0)
 					throw new StockException(SaleUtil.OUT_OF_STOCK);
 				gaux.setQuantity(gAuxQ - iQ);
 				genericProductRepository.save(gaux);
 			}
-			
+
 		}
 		return new ResponseEntity<Sale>(newSale, HttpStatus.OK);
 	}
-	
-	
+
 }

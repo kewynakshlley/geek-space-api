@@ -14,5 +14,5 @@ public class AbstractRole {
 	public void setCodeName(String codeName) {
 		this.codeName = codeName;
 	}
-	
+
 }

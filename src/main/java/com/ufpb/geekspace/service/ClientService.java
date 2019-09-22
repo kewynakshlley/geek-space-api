@@ -24,15 +24,15 @@ public class ClientService {
 
 	public Client retrieveOneClient(long clienteId) throws DataNotFoundException {
 		Client aux = clientRepository.getOne(clienteId);
-		if(aux == null)
+		if (aux == null)
 			throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
 		return clientRepository.getOne(clienteId);
 	}
 
 	public ResponseEntity<?> createClient(Client client) throws DataAlreadyExistsException {
-		
+
 		Client createdClient = clientRepository.findByEmail(client.getEmail());
-		if(createdClient != null)
+		if (createdClient != null)
 			throw new DataAlreadyExistsException(UserUtil.USER_ALREADY_EXISTS);
 		createdClient = clientRepository.save(client);
 		return new ResponseEntity<Client>(createdClient, HttpStatus.OK);
@@ -41,7 +41,7 @@ public class ClientService {
 
 	public ResponseEntity<?> editClient(Client client) throws DataNotFoundException {
 		Client createdClient = clientRepository.getOne(client.getId());
-		if(createdClient == null)
+		if (createdClient == null)
 			throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
 		createdClient = clientRepository.save(client);
 		return new ResponseEntity<Client>(createdClient, HttpStatus.OK);
@@ -50,11 +50,10 @@ public class ClientService {
 
 	public void deleteClient(long clientId) throws DataNotFoundException {
 		Client createdClient = clientRepository.getOne(clientId);
-		if(createdClient == null)
+		if (createdClient == null)
 			throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
 		clientRepository.deleteById(clientId);
 
 	}
 
-	
 }

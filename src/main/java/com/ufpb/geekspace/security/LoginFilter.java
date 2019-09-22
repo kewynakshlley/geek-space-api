@@ -1,4 +1,5 @@
 package com.ufpb.geekspace.security;
+
 import java.io.IOException;
 import java.util.Collections;
 
@@ -15,8 +16,6 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import com.ufpb.geekspace.dto.LoginDTO;
 import com.ufpb.geekspace.util.JsonUtil;
-
-
 
 public class LoginFilter extends AbstractAuthenticationProcessingFilter {
 
