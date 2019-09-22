@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufpb.geekspace.dto.EmailDTO;
 import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
@@ -72,7 +73,7 @@ public class ClientController {
 		shoppingCartService.createShoppingCart(shoppingCart, clientId);
 
 	}
-	
+
 	@PostMapping(value = "/{clientId}/add-item")
 	public void addItem(@RequestBody Item item, @PathVariable long clientId) {
 		shoppingCartService.addItem(item, clientId);
@@ -82,19 +83,24 @@ public class ClientController {
 	public void removeItem(@PathVariable long clientId, @PathVariable long itemId) {
 		shoppingCartService.removeItem(clientId, itemId);
 	}
-	
+
 	@PostMapping(value = "{clientId}/favorites/new/{productId}")
 	public void addToFavorites(@PathVariable long clientId, @PathVariable long productId) throws DataNotFoundException {
 		clientService.addToFavorites(clientId, productId);
 	}
-	
+
 	@GetMapping(value = "{clientId}/favorites")
-	public List<Product> getFavorites(@PathVariable long clientId){
+	public List<Product> getFavorites(@PathVariable long clientId) {
 		return clientService.getFavorites(clientId);
 	}
-	
+
 	@DeleteMapping(value = "{clientId}/favorites/{productId}")
 	public void deleteFavorite(@PathVariable long clientId, @PathVariable long productId) {
 		clientService.deleteFavorite(clientId, productId);
+	}
+
+	@PostMapping(path = "/recovery")
+	public void recoveryPassword(@RequestBody EmailDTO email) throws DataNotFoundException {
+		clientService.recoveryPassword(email);
 	}
 }

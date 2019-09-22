@@ -7,15 +7,14 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ufpb.geekspace.dto.EmailDTO;
 import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
-import com.ufpb.geekspace.model.GenericProduct;
 import com.ufpb.geekspace.model.Product;
-import com.ufpb.geekspace.model.ShirtProduct;
 import com.ufpb.geekspace.repository.ClientRepository;
-import com.ufpb.geekspace.repository.GenericProductRepository;
-import com.ufpb.geekspace.repository.ShirtProductRepository;
+import com.ufpb.geekspace.repository.ProductRepository;
+import com.ufpb.geekspace.util.EmailUtil;
 import com.ufpb.geekspace.util.ProductUtil;
 import com.ufpb.geekspace.util.UserUtil;
 
@@ -24,9 +23,9 @@ public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
 	@Autowired
-	private ShirtProductRepository shirtProductRepository;
+	private MailingService mailingService;
 	@Autowired
-	private GenericProductRepository genericProductRepository;
+	private ProductRepository productRepository;
 
 	public List<Client> retrievAllClients() {
 		return clientRepository.findAll();
@@ -45,6 +44,12 @@ public class ClientService {
 		if (createdClient != null)
 			throw new DataAlreadyExistsException(UserUtil.USER_ALREADY_EXISTS);
 		createdClient = clientRepository.save(client);
+		new Thread(new Runnable(){  
+			@Override   
+			public void run(){  
+				mailingService.send(client.getEmail(), EmailUtil.EMAIL_WELCOME_TITLE, EmailUtil.EMAIL_WELCOME_CONTENT);  
+			}   
+		}).start();
 		return new ResponseEntity<Client>(createdClient, HttpStatus.OK);
 
 	}
@@ -69,14 +74,10 @@ public class ClientService {
 	public void addToFavorites(long clientId, long productId) throws DataNotFoundException {
 		Client caux = clientRepository.getOne(clientId);
 		Product paux = null;
-		
-		ShirtProduct saux = shirtProductRepository.getOne(productId);
-		
-		GenericProduct gaux = genericProductRepository.getOne(productId);
-		if(saux != null)
-			paux = saux;
-		else
-			paux = gaux;
+		for(Product p: productRepository.findAll()) {
+			if(p.getId() == productId)
+				paux = p;
+		}
 		
 		if(caux == null) throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
 		if(paux == null) throw new DataNotFoundException(ProductUtil.PRODUCT_NOT_FOUND);
@@ -105,5 +106,17 @@ public class ClientService {
 		clientRepository.save(caux);
 		
 	}
-
+	
+	public void recoveryPassword(EmailDTO email) throws DataNotFoundException {
+		Client userAux = clientRepository.findByEmail(email.getEmail());
+		if(userAux == null)
+			throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
+		new Thread(new Runnable(){  
+			@Override   
+			public void run(){  
+				mailingService.send(email.getEmail(), EmailUtil.EMAIL_SUBJECT, EmailUtil.EMAIL_CONTENT+""+userAux.getPassword());  
+			}   
+		}).start();
+		
+	}
 }
