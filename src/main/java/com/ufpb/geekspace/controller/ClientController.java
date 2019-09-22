@@ -17,6 +17,7 @@ import com.ufpb.geekspace.dto.ItemDTO;
 import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
+import com.ufpb.geekspace.model.Item;
 import com.ufpb.geekspace.model.ShoppingCart;
 import com.ufpb.geekspace.service.ClientService;
 import com.ufpb.geekspace.service.ShoppingCartService;
@@ -70,6 +71,11 @@ public class ClientController {
 			throws DataNotFoundException {
 		shoppingCartService.createShoppingCart(shoppingCart, clientId);
 
+	}
+	
+	@PostMapping(value = "/{clientId}/add-item")
+	public void addItem(@RequestBody Item item, @PathVariable long clientId) {
+		shoppingCartService.addItem(item, clientId);
 	}
 
 	@DeleteMapping(value = "/{clientId}/remove-item/{itemId}")

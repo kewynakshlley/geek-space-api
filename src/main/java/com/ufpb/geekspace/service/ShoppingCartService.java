@@ -77,4 +77,11 @@ public class ShoppingCartService {
 
 	}
 
+	public void addItem(Item item, long clientId) {
+		ShoppingCart sc = shoppingCartRepository.findByClientId(clientId);
+		sc.getItems().add(item);
+		shoppingCartRepository.save(sc);
+		
+	}
+
 }
