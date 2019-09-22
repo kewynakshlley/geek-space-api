@@ -22,8 +22,8 @@ public class ShirtProduct extends Product {
 	}
 
 	public ShirtProduct(long id, String name, String category, int quantity, double price, String specification,
-			String description, List<Item> items, String image, String color, String genre, String size) {
-		super(id, name, category, quantity, price, specification, description, items, image);
+			String description, List<Item> items, String image, String color, String genre, String size, List<Client> clients) {
+		super(id, name, category, quantity, price, specification, description, items, image, clients);
 		this.color = color;
 		this.genre = genre;
 		this.size = size;

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.ShirtProduct;
 import com.ufpb.geekspace.service.ShirtProductService;
 
@@ -44,7 +45,7 @@ public class ShirtProductController {
 	}
 
 	@DeleteMapping(value = "/{shirtId}")
-	public void deleteShirtProduct(@PathVariable long shirtId) {
+	public void deleteShirtProduct(@PathVariable long shirtId) throws DataNotFoundException {
 		shirtProductService.deleteShirtCamisa(shirtId);
 
 	}

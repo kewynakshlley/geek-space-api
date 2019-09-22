@@ -18,6 +18,7 @@ import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
 import com.ufpb.geekspace.model.Item;
+import com.ufpb.geekspace.model.Product;
 import com.ufpb.geekspace.model.ShoppingCart;
 import com.ufpb.geekspace.service.ClientService;
 import com.ufpb.geekspace.service.ShoppingCartService;
@@ -79,7 +80,17 @@ public class ClientController {
 	}
 
 	@DeleteMapping(value = "/{clientId}/remove-item/{itemId}")
-	public void removeItem(@RequestBody ItemDTO item, @PathVariable long clientId, @PathVariable long itemId) {
+	public void removeItem(@PathVariable long clientId, @PathVariable long itemId) {
 		shoppingCartService.removeItem(clientId, itemId);
+	}
+	
+	@PostMapping(value = "{clientId}/add-to-favorites/{productId}")
+	public void addToFavorites(@PathVariable long clientId, @PathVariable long productId) throws DataNotFoundException {
+		clientService.addToFavorites(clientId, productId);
+	}
+	
+	@GetMapping(value = "{clientId}/favorites")
+	public List<Product> getFavorites(@PathVariable long clientId){
+		return clientService.getFavorites(clientId);
 	}
 }

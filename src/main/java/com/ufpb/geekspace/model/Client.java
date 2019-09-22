@@ -33,15 +33,21 @@ public class Client extends AbstractPerson {
 	@JoinTable(name = "user_role", joinColumns = { @JoinColumn(name = "user_id") }, inverseJoinColumns = {
 			@JoinColumn(name = "role_id") })
 	private Set<Role> role;
+	@JsonIgnore
+	@ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+	@JoinTable(name = "favorites", joinColumns = { @JoinColumn(name = "client_id") }, inverseJoinColumns = {
+			@JoinColumn(name = "product_id") })
+	private List<Product> favorites;
 
 	public Client() {
 	}
 
-	public Client(String firstName, String lastName, ShoppingCart shoppingCart, Set<Role> roles) {
+	public Client(String firstName, String lastName, ShoppingCart shoppingCart, Set<Role> roles, List<Product> favorites) {
 		this.firstName = firstName;
 		this.lastName = lastName;
 		this.shoppingCart = shoppingCart;
 		this.role = roles;
+		this.favorites = favorites;
 	}
 
 	public String getFirstName() {
@@ -74,6 +80,14 @@ public class Client extends AbstractPerson {
 
 	public void setSales(List<Sale> sales) {
 		this.sales = sales;
+	}
+
+	public List<Product> getFavorites() {
+		return favorites;
+	}
+
+	public void setFavorites(List<Product> favorites) {
+		this.favorites = favorites;
 	}
 
 	@Override

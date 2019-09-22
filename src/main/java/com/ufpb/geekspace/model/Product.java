@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.InheritanceType;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 
 @Entity
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
@@ -47,13 +48,16 @@ public class Product {
 	@Lob
 	@Column(name = "IMAGE", length = Integer.MAX_VALUE)
 	private String image;
+	@JsonIgnore
+	@ManyToMany(mappedBy = "favorites")
+	private List<Client> clients;
 
 	public Product() {
 
 	}
 
 	public Product(long id, String name, String category, int quantity, double price, String specification,
-			String description, List<Item> items, String image) {
+			String description, List<Item> items, String image, List<Client> clients) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -64,6 +68,7 @@ public class Product {
 		this.description = description;
 		this.items = items;
 		this.image = image;
+		this.clients = clients;
 
 	}
 
@@ -138,5 +143,15 @@ public class Product {
 	public void setImage(String image) {
 		this.image = image;
 	}
+
+	public List<Client> getClients() {
+		return clients;
+	}
+
+	public void setClients(List<Client> clients) {
+		this.clients = clients;
+	}
+	
+	
 
 }

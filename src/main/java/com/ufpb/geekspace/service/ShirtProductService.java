@@ -7,8 +7,10 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.ShirtProduct;
 import com.ufpb.geekspace.repository.ShirtProductRepository;
+import com.ufpb.geekspace.util.ProductUtil;
 
 @Service
 public class ShirtProductService {
@@ -34,7 +36,10 @@ public class ShirtProductService {
 		return new ResponseEntity<ShirtProduct>(createdShirt, HttpStatus.OK);
 	}
 
-	public void deleteShirtCamisa(long shirtId) {
-		camisaRepository.deleteById(shirtId);
+	public void deleteShirtCamisa(long shirtId) throws DataNotFoundException {
+		ShirtProduct sp = camisaRepository.getOne(shirtId);
+		if(sp == null)
+			throw new DataNotFoundException(ProductUtil.PRODUCT_NOT_FOUND);
+		camisaRepository.delete(sp);
 	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.GenericProduct;
 import com.ufpb.geekspace.service.GenericProductService;
 
@@ -44,7 +45,7 @@ public class GenericProductController {
 	}
 
 	@DeleteMapping(value = "/{productId}")
-	public void deleteProduct(@PathVariable long productId) {
+	public void deleteProduct(@PathVariable long productId) throws DataNotFoundException {
 		genericProductService.deleteProduct(productId);
 		;
 	}

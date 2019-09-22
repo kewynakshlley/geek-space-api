@@ -73,7 +73,7 @@ public class ClientControllerTest {
 	
 	@Test
 	public void deleteClientTest() throws DataNotFoundException {
-		Client client = new Client("", null, null, null);
+		Client client = new Client();
 		service.deleteClient(client.getId());
 		verify(repository, times(1)).deleteById(client.getId());
 	}

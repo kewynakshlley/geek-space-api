@@ -68,11 +68,13 @@ public class ShoppingCartService {
 
 	public void removeItem(long clientId, long itemId) {
 		ShoppingCart sc = shoppingCartRepository.findByClientId(clientId);
+		Item aux = null;
 		for (Item i : sc.getItems()) {
 			if (i.getId() == itemId) {
-				sc.getItems().remove(i);
+				aux = i;
 			}
 		}
+		sc.getItems().remove(aux);
 		shoppingCartRepository.save(sc);
 
 	}

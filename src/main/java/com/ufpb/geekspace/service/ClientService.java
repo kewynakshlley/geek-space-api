@@ -10,13 +10,23 @@ import org.springframework.stereotype.Service;
 import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
+import com.ufpb.geekspace.model.GenericProduct;
+import com.ufpb.geekspace.model.Product;
+import com.ufpb.geekspace.model.ShirtProduct;
 import com.ufpb.geekspace.repository.ClientRepository;
+import com.ufpb.geekspace.repository.GenericProductRepository;
+import com.ufpb.geekspace.repository.ShirtProductRepository;
+import com.ufpb.geekspace.util.ProductUtil;
 import com.ufpb.geekspace.util.UserUtil;
 
 @Service
 public class ClientService {
 	@Autowired
 	private ClientRepository clientRepository;
+	@Autowired
+	private ShirtProductRepository shirtProductRepository;
+	@Autowired
+	private GenericProductRepository genericProductRepository;
 
 	public List<Client> retrievAllClients() {
 		return clientRepository.findAll();
@@ -52,8 +62,36 @@ public class ClientService {
 		Client createdClient = clientRepository.getOne(clientId);
 		if (createdClient == null)
 			throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
-		clientRepository.deleteById(clientId);
+		clientRepository.delete(createdClient);
 
+	}
+
+	public void addToFavorites(long clientId, long productId) throws DataNotFoundException {
+		Client caux = clientRepository.getOne(clientId);
+		Product paux = null;
+		
+		ShirtProduct saux = shirtProductRepository.getOne(productId);
+		
+		GenericProduct gaux = genericProductRepository.getOne(productId);
+		if(saux != null)
+			paux = saux;
+		else
+			paux = gaux;
+		
+		if(caux == null) throw new DataNotFoundException(UserUtil.USER_NOT_FOUND);
+		if(paux == null) throw new DataNotFoundException(ProductUtil.PRODUCT_NOT_FOUND);
+		
+		caux.getFavorites().add(paux);
+		paux.getClients().add(caux);
+		clientRepository.save(caux);
+		
+		
+		
+	}
+
+	public List<Product> getFavorites(long clientId) {
+		Client caux = clientRepository.getOne(clientId);
+		return caux.getFavorites();
 	}
 
 }

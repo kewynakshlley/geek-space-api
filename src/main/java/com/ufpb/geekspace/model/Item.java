@@ -60,11 +60,11 @@ public class Item {
 		this.quantity = quantity;
 	}
 
-	public double getSubValue() {
+	public double getSubtotal() {
 		return subtotal;
 	}
 
-	public void setsubTotal(double subtotal) {
+	public void setSubtotal(double subtotal) {
 		this.subtotal = subtotal;
 	}
 
