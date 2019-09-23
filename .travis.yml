@@ -5,6 +5,7 @@ services:
     - docker
 script:
     - mvn clean install -B
+after_success:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - export IMAGE_NAME=kewynakshlley/geekspace-api
     - docker build -t $IMAGE_NAME
