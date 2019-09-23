@@ -2,6 +2,8 @@ package com.ufpb.geekspace.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -45,7 +47,12 @@ public class ProductController {
 	@DeleteMapping(value = "/{productId}")
 	public void deleteProduct(@PathVariable long productId) {
 		productService.deleteProduct(productId);
-		;
+		
+	}
+	
+	@GetMapping(value = "/category-filter")
+	public List<Product> filterByCategory(@PathParam("category") String category){
+		return productService.filterByCategory(category);
 	}
 
 }

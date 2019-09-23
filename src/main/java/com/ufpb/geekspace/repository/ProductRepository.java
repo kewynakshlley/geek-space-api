@@ -16,4 +16,6 @@ public interface ProductRepository extends JpaRepository<Product, Long>{
 			+ "JOIN client c ON sc.client_id = :client_id", nativeQuery = true)
 	List<Product> findShoppingCart(long client_id);
 
+	List<Product> findByCategory(String category);
+
 }

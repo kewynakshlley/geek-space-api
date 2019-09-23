@@ -2,6 +2,8 @@ package com.ufpb.geekspace.controller;
 
 import java.util.List;
 
+import javax.websocket.server.PathParam;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -14,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufpb.geekspace.exception.DataNotFoundException;
+import com.ufpb.geekspace.model.Product;
 import com.ufpb.geekspace.model.ShirtProduct;
 import com.ufpb.geekspace.service.ShirtProductService;
 
@@ -49,5 +52,21 @@ public class ShirtProductController {
 		shirtProductService.deleteShirtCamisa(shirtId);
 
 	}
+	
+	@GetMapping(value = "/genre-filter")
+	public List<Product> filterByGenre(@PathParam("genre") String genre){
+		return shirtProductService.filterByGenre(genre);
+	}
+	
+	@GetMapping(value = "/color-filter")
+	public List<Product> filterByColor(@PathParam("color") String color){
+		return shirtProductService.filterByColor(color);
+	}
+	
+	@GetMapping(value = "/color-genre-filter")
+	public List<Product> filterByColorAndGenre(@PathParam("genre") String genre, @PathParam("color") String color){
+		return shirtProductService.filterByColorAndGenre(color, genre);
+	}
+
 
 }
