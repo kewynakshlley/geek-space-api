@@ -3,11 +3,14 @@ jdk: openjdk11
 sudo: required
 services:
     - docker
-script:
+before_deploy:
     - mvn clean install -B
-after_sucess:
-    - docker login -u $DOCKER_USER -p $DOCKER_PASS
-    - export IMAGE_NAME=kewynakshlley/geekspace-api
-    - docker build -t $IMAGE_NAME .
-    - docker push $IMAGE_NAME
-
+deploy:
+    provider: script
+    script:
+        - docker login -u $DOCKER_USER -p $DOCKER_PASS
+        - export IMAGE_NAME=kewynakshlley/geekspace-api
+        - docker build -t $IMAGE_NAME .
+        - docker push $IMAGE_NAME
+    on:
+        branch: master
