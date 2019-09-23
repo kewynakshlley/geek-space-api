@@ -8,6 +8,6 @@ script:
 after_sucess:
     - docker login -u $DOCKER_USER -p $DOCKER_PASS
     - export IMAGE_NAME=kewynakshlley/geekspace-api
-    - docker build -t $IMAGE_NAME
+    - docker build -t $IMAGE_NAME .
     - docker push $IMAGE_NAME
 
