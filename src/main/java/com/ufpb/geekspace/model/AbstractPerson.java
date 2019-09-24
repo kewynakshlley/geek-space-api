@@ -16,7 +16,6 @@ public abstract class AbstractPerson {
 	private long id;
 	@Column(name = "email")
 	private String email;
-	@JsonIgnore
 	@Column(name = "password")
 	private String password;
 
