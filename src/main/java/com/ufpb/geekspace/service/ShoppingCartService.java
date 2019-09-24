@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
 import com.ufpb.geekspace.model.Item;
@@ -14,6 +15,7 @@ import com.ufpb.geekspace.repository.ClientRepository;
 import com.ufpb.geekspace.repository.GenericProductRepository;
 import com.ufpb.geekspace.repository.ShirtProductRepository;
 import com.ufpb.geekspace.repository.ShoppingCartRepository;
+import com.ufpb.geekspace.util.ProductUtil;
 import com.ufpb.geekspace.util.UserUtil;
 
 @Service
@@ -79,8 +81,13 @@ public class ShoppingCartService {
 
 	}
 
-	public void addItem(Item item, long clientId) {
+	public void addItem(Item item, long clientId) throws DataAlreadyExistsException {
 		ShoppingCart sc = shoppingCartRepository.findByClientId(clientId);
+		for(Item i: sc.getItems()) {
+			if(i.getProduct().getId() == item.getProduct().getId()) {
+				throw new DataAlreadyExistsException(ProductUtil.PRODUCT_ALREADY_EXISTS);
+			}
+		}
 		sc.getItems().add(item);
 		shoppingCartRepository.save(sc);
 		

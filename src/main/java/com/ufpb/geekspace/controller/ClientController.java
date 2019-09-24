@@ -80,7 +80,7 @@ public class ClientController {
 	}
 
 	@PostMapping(value = "/{clientId}/add-item")
-	public void addItem(@RequestBody Item item, @PathVariable long clientId) {
+	public void addItem(@RequestBody Item item, @PathVariable long clientId) throws DataAlreadyExistsException {
 		shoppingCartService.addItem(item, clientId);
 	}
 	
