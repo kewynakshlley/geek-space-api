@@ -26,7 +26,6 @@ public class Sale {
 	private Client client;
 	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
-	@JsonIgnore
 	private ShoppingCart shoppingCart;
 
 	@Column(name = "PAYMENT")
