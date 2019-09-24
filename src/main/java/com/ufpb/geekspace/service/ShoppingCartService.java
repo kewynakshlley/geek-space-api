@@ -122,8 +122,8 @@ public class ShoppingCartService {
 		shoppingCartRepository.save(sc);
 	}
 
-	public void setCartTotalValue(ShoppingCartDTO shoppingCart, long shoppingCartId) {
-		ShoppingCart sc = shoppingCartRepository.getOne(shoppingCartId);
+	public void setCartTotalValue(ShoppingCartDTO shoppingCart, long clientId) {
+		ShoppingCart sc = shoppingCartRepository.findByClientId(clientId);
 		sc.setTotal(shoppingCart.getTotalValue());
 		shoppingCartRepository.save(sc);
 		

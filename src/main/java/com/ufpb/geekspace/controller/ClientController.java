@@ -73,9 +73,9 @@ public class ClientController {
 		shoppingCartService.editShoppingCart(shoppingCart);
 	}
 	
-	@PutMapping(value = "{clientId}/shopping-cart/{shoppingCartId}/total")
-	public void setCartTotalValue(@RequestBody ShoppingCartDTO shoppingCart, @PathVariable long shoppingCartId) {
-		shoppingCartService.setCartTotalValue(shoppingCart, shoppingCartId);
+	@PutMapping(value = "{clientId}/shopping-cart/total")
+	public void setCartTotalValue(@RequestBody ShoppingCartDTO shoppingCart, @PathVariable long clientId) {
+		shoppingCartService.setCartTotalValue(shoppingCart, clientId);
 	}
 
 	@PostMapping(value = "/{clientId}/create-cart")
