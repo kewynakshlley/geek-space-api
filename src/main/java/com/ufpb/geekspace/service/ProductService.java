@@ -1,6 +1,7 @@
 package com.ufpb.geekspace.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,8 +21,8 @@ public class ProductService {
 		return productRepository.findAll();
 	}
 
-	public Product retrieveOneProduct(long productID) {
-		return productRepository.getOne(productID);
+	public Optional<Product> retrieveOneProduct(long productID) {
+		return productRepository.findById(productID);
 	}
 
 	public ResponseEntity<?> createProduct(Product product) {
@@ -42,4 +43,5 @@ public class ProductService {
 	public List<Product> filterByCategory(String category) {
 		return productRepository.findByCategory(category);
 	}
+
 }

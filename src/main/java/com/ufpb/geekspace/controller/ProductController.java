@@ -1,6 +1,7 @@
 package com.ufpb.geekspace.controller;
 
 import java.util.List;
+import java.util.Optional;
 
 import javax.websocket.server.PathParam;
 
@@ -30,7 +31,7 @@ public class ProductController {
 	}
 
 	@GetMapping(value = "/{productId}")
-	public Product retrieveOneProduct(@PathVariable long productId) {
+	public Optional<Product> retrieveOneProduct(@PathVariable long productId) {
 		return productService.retrieveOneProduct(productId);
 	}
 
@@ -54,5 +55,6 @@ public class ProductController {
 	public List<Product> filterByCategory(@PathParam("category") String category){
 		return productService.filterByCategory(category);
 	}
+	
 
 }

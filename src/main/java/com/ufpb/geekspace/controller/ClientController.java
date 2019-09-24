@@ -19,8 +19,10 @@ import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
 import com.ufpb.geekspace.model.Item;
 import com.ufpb.geekspace.model.Product;
+import com.ufpb.geekspace.model.Sale;
 import com.ufpb.geekspace.model.ShoppingCart;
 import com.ufpb.geekspace.service.ClientService;
+import com.ufpb.geekspace.service.SaleService;
 import com.ufpb.geekspace.service.ShoppingCartService;
 
 @RestController
@@ -31,6 +33,9 @@ public class ClientController {
 
 	@Autowired
 	private ShoppingCartService shoppingCartService;
+	
+	@Autowired
+	private SaleService saleService;
 
 	@GetMapping
 	public List<Client> retrievAllClients() {
@@ -97,6 +102,11 @@ public class ClientController {
 	@DeleteMapping(value = "{clientId}/favorites/{productId}")
 	public void deleteFavorite(@PathVariable long clientId, @PathVariable long productId) {
 		clientService.deleteFavorite(clientId, productId);
+	}
+	
+	@GetMapping(value = "{clientId}/sales")
+	public List<Sale> getClientSales(@PathVariable long clientId){
+		return saleService.getClientSales(clientId);
 	}
 
 	@PostMapping(path = "/recovery")

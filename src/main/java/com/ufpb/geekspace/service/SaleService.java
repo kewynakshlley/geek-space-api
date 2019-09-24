@@ -7,18 +7,17 @@ import org.springframework.stereotype.Service;
 
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.exception.StockException;
-import com.ufpb.geekspace.model.GenericProduct;
 import com.ufpb.geekspace.model.Item;
+import com.ufpb.geekspace.model.Product;
 import com.ufpb.geekspace.model.Sale;
-import com.ufpb.geekspace.model.ShirtProduct;
 import com.ufpb.geekspace.model.ShoppingCart;
-import com.ufpb.geekspace.repository.GenericProductRepository;
+import com.ufpb.geekspace.repository.ProductRepository;
 import com.ufpb.geekspace.repository.SaleRepository;
-import com.ufpb.geekspace.repository.ShirtProductRepository;
 import com.ufpb.geekspace.repository.ShoppingCartRepository;
 import com.ufpb.geekspace.util.SaleUtil;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class SaleService {
@@ -26,11 +25,9 @@ public class SaleService {
 	@Autowired
 	private SaleRepository saleRepository;
 	@Autowired
-	private ShirtProductRepository shirtProductRepository;
-	@Autowired
-	private GenericProductRepository genericProductRepository;
-	@Autowired
 	private ShoppingCartRepository shoppingCartRepository;
+	@Autowired
+	private ProductRepository productRepository;
 
 	public List<Sale> retrieveAllSales() {
 		return saleRepository.findAll();
@@ -49,31 +46,22 @@ public class SaleService {
 		sale.setClient(sc.getClient());
 		Sale newSale = saleRepository.save(sale);
 		for (Item i : sc.getItems()) {
-			ShirtProduct paux = null;
-			GenericProduct gaux = null;
-			paux = shirtProductRepository.getOne(i.getProduct().getId());
-			if (paux != null) {
-				int pAuxQ = paux.getQuantity();
+			Optional<Product> paux = productRepository.findById(i.getProduct().getId());
+			if(paux != null) {
+				int pAuxQ = paux.get().getQuantity();
 				int iQ = i.getQuantity();
 				if ((pAuxQ - iQ) < 0)
 					throw new StockException(SaleUtil.OUT_OF_STOCK);
-				paux.setQuantity(pAuxQ - iQ);
-				shirtProductRepository.save(paux);
-				continue;
-			}
-
-			gaux = genericProductRepository.getOne(i.getProduct().getId());
-			if (gaux != null) {
-				int gAuxQ = gaux.getQuantity();
-				int iQ = i.getQuantity();
-				if ((gAuxQ - iQ) < 0)
-					throw new StockException(SaleUtil.OUT_OF_STOCK);
-				gaux.setQuantity(gAuxQ - iQ);
-				genericProductRepository.save(gaux);
+				paux.get().setQuantity(pAuxQ - iQ);
+				productRepository.save(paux.get());
 			}
 
 		}
 		return new ResponseEntity<Sale>(newSale, HttpStatus.OK);
+	}
+
+	public List<Sale> getClientSales(long clientId) {
+		return saleRepository.findByClientId(clientId);
 	}
 
 }

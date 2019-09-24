@@ -23,7 +23,6 @@ public class Sale {
 
 	@ManyToOne
 	@JoinColumn(name = "client_id", nullable = false)
-	@JsonIgnore
 	private Client client;
 	@OneToOne(cascade = CascadeType.MERGE)
 	@JoinColumn(name = "shopping_cart_id", referencedColumnName = "id")
