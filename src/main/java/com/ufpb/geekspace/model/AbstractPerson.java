@@ -7,7 +7,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @MappedSuperclass
 public abstract class AbstractPerson {

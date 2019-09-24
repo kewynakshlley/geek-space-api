@@ -86,4 +86,32 @@ public class ShoppingCartService {
 		
 	}
 
+	public void increaseQuatity(long itemId, long clientId) {
+		ShoppingCart sc = shoppingCartRepository.findByClientId(clientId);
+		Item aux = null;
+		for (Item i : sc.getItems()) {
+			if (i.getId() == itemId) {
+				aux = i;
+				break;
+			}
+		}
+		aux.setQuantity(aux.getQuantity() + 1);
+		sc.getItems().add(aux);
+		shoppingCartRepository.save(sc);
+	}
+	
+	public void decreaseQuatity(long itemId, long clientId) {
+		ShoppingCart sc = shoppingCartRepository.findByClientId(clientId);
+		Item aux = null;
+		for (Item i : sc.getItems()) {
+			if (i.getId() == itemId) {
+				aux = i;
+				break;
+			}
+		}
+		aux.setQuantity(aux.getQuantity() - 1);
+		sc.getItems().add(aux);
+		shoppingCartRepository.save(sc);
+	}
+
 }

@@ -83,6 +83,16 @@ public class ClientController {
 	public void addItem(@RequestBody Item item, @PathVariable long clientId) {
 		shoppingCartService.addItem(item, clientId);
 	}
+	
+	@PutMapping(value = "/{clientId}/increase-quantity/{itemId}")
+	public void increaseQuantity(@PathVariable long itemId, @PathVariable long clientId) {
+		shoppingCartService.increaseQuatity(itemId, clientId);
+	}
+	
+	@PutMapping(value = "/{clientId}/decrease-quantity/{itemId}")
+	public void decreaseQuantity(@PathVariable long itemId, @PathVariable long clientId) {
+		shoppingCartService.decreaseQuatity(itemId, clientId);
+	}
 
 	@DeleteMapping(value = "/{clientId}/remove-item/{itemId}")
 	public void removeItem(@PathVariable long clientId, @PathVariable long itemId) {
