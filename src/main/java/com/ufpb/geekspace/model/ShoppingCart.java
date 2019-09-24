@@ -31,13 +31,13 @@ public class ShoppingCart {
 	@JsonIgnore
 	private Sale sale;
 	@Column(name = "TOTAL")
-	private int total;
+	private double total;
 
 	public ShoppingCart() {
 
 	}
 
-	public ShoppingCart(long id, Client client, Sale sale, int total, Item... items) {
+	public ShoppingCart(long id, Client client, Sale sale, double total, Item... items) {
 		super();
 		this.id = id;
 		this.client = client;
@@ -80,11 +80,11 @@ public class ShoppingCart {
 		this.sale = sale;
 	}
 
-	public int getTotal() {
+	public double getTotal() {
 		return total;
 	}
 
-	public void setTotal(int total) {
+	public void setTotal(double total) {
 		this.total = total;
 	}
 }

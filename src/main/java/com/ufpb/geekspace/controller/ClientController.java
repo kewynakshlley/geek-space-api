@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.ufpb.geekspace.dto.EmailDTO;
+import com.ufpb.geekspace.dto.ShoppingCartDTO;
 import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
@@ -70,6 +71,11 @@ public class ClientController {
 	@PutMapping(value = "{clientId}/shopping-cart/edit")
 	public void editShoppingCart(@RequestBody ShoppingCart shoppingCart) {
 		shoppingCartService.editShoppingCart(shoppingCart);
+	}
+	
+	@PutMapping(value = "{clientId}/shopping-cart/{shoppingCartId}/total")
+	public void setCartTotalValue(@RequestBody ShoppingCartDTO shoppingCart, @PathVariable long shoppingCartId) {
+		shoppingCartService.setCartTotalValue(shoppingCart, shoppingCartId);
 	}
 
 	@PostMapping(value = "/{clientId}/create-cart")

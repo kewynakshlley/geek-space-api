@@ -1,17 +1,16 @@
 package com.ufpb.geekspace.dto;
 
-public class ItemDTO {
+public class ShoppingCartDTO {
 	private double totalValue;
 
-	public ItemDTO() {
+	public ShoppingCartDTO() {
 	}
 
-	public ItemDTO(double totalValue) {
+	public ShoppingCartDTO(double totalValue) {
 		super();
 		this.totalValue = totalValue;
-
 	}
-	
+
 	public double getTotalValue() {
 		return totalValue;
 	}
@@ -19,7 +18,5 @@ public class ItemDTO {
 	public void setTotalValue(double totalValue) {
 		this.totalValue = totalValue;
 	}
-
-
 
 }

@@ -5,6 +5,7 @@ import java.util.Set;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.ufpb.geekspace.dto.ShoppingCartDTO;
 import com.ufpb.geekspace.exception.DataAlreadyExistsException;
 import com.ufpb.geekspace.exception.DataNotFoundException;
 import com.ufpb.geekspace.model.Client;
@@ -119,6 +120,14 @@ public class ShoppingCartService {
 		aux.setQuantity(aux.getQuantity() - 1);
 		sc.getItems().add(aux);
 		shoppingCartRepository.save(sc);
+	}
+
+	public void setCartTotalValue(ShoppingCartDTO shoppingCart, long shoppingCartId) {
+		ShoppingCart sc = shoppingCartRepository.getOne(shoppingCartId);
+		sc.setTotal(shoppingCart.getTotalValue());
+		shoppingCartRepository.save(sc);
+		
+		
 	}
 
 }
